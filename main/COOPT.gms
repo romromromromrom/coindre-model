@@ -885,8 +885,6 @@ execute_unload '%out_dir%\all_results_COOPT.gdx'
 execute 'gdxxrw.exe input="%out_dir%\%out_name% (%RUN_NUM%).gdx" output="%COMMON_DIRECTORY%\run_results.xlsx" par=report rng=raw_results!a1'
 ******* Write the log file *****************************************
 File log "this is the command that saves the log file" /'%out_dir%\COOPT.log'/;
-*** export to hydrolix ******
-execute '"%COMMON_DIRECTORY%\post_results.py"'
 
 File power_schedule /"%out_dir%\power_schedule.csv"/;
 File vane_schedule  /"%out_dir%\vane_schedule.csv"/;
