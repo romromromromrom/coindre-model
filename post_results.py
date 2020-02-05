@@ -22,3 +22,6 @@ def post_results2hdx(common_dir):
     c.post_parameter_timeseries_data(power_schedule,'Coindre_T' ,'production' , scenario, version)
     c.post_parameter_timeseries_data(vane_schedule,'Petite-Rhue_R', 'valve_position', scenario, version)
 
+if __name__=='__main__':
+    common_dir = os.path.dirname(os.path.realpath(__file__))
+    post_results2hdx(common_dir)

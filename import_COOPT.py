@@ -198,12 +198,12 @@ def write_model_inputs(PERSONAL_API_KEY,start_date,end_date, common_directory , 
 
 
 if __name__=='__main__':
-    API_KEY = '5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj'
+    PERSONAL_API_KEY = '5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj'
     start_date = dt.datetime(2020, 1, 1)
     number_of_days = 14
     end_date = start_date + dt.timedelta(days=number_of_days)
     common_dir = r'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\COOPT_V6.0'
-    write_model_inputs(PERSONAL_API_KEY=API_KEY, start_date=start_date, end_date=end_date, common_directory=common_dir, write_csv=True, plot_brut=False, plot_imbal_pr=False, plot_imbal_gr=False, moving_averages=False, plot_scatters=False)
+    write_model_inputs(PERSONAL_API_KEY=PERSONAL_API_KEY, start_date=start_date, end_date=end_date, common_directory=common_dir, write_csv=True, plot_brut=False, plot_imbal_pr=False, plot_imbal_gr=False, moving_averages=False, plot_scatters=False)
 
 
 
