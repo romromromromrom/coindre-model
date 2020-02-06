@@ -1,10 +1,10 @@
-from os import path
 import datetime as dt
 import numpy as np
 import pandas as pd
-import hydrolix_client as hx
-import pi_simple_client as psc
 
+import coindre_optim.hydrolix_client as hx
+import coindre_optim.pi_simple_client as psc
+from . import TZ
 
 #############################################
 
@@ -51,7 +51,7 @@ def write_model_inputs(
         + dt.timedelta(days=1)
         - dt.timedelta(hours=1),
         freq="1h",
-        tz="Europe/Brussels",
+        tz=TZ,
     )
     I_gr_proposed = I_gr_proposed.reindex(drange).fillna(method="ffill")
     I_pr_proposed = I_pr_proposed.reindex(drange).fillna(method="ffill")
@@ -237,21 +237,21 @@ def write_model_inputs(
     ).rename(columns={"value": "unavail"})
 
     # Convert to TIME ZONE BRUSSELS
-    zgr2 = z_gr.tz_convert("Europe/Brussels")
-    zpr2 = z_pr.tz_convert("Europe/Brussels")
-    qgr = q_gr.loc[:, "qgr"].tz_convert("Europe/Brussels")
-    qpr = q_pr.loc[:, "qpr"].tz_convert("Europe/Brussels")
-    igr2 = I_gr["igr"].tz_convert("Europe/Brussels")
-    ipr2 = I_pr["ipr"].tz_convert("Europe/Brussels")
-    p2 = P.tz_convert("Europe/Brussels")
-    valve2 = valve_position["valve"].tz_convert("Europe/Brussels")
-    dz2 = dz.tz_convert("Europe/Brussels")
-    v_pr = v_pr.tz_convert("Europe/Brussels")
-    v_gr = v_gr.tz_convert("Europe/Brussels")
-    spill_pr2 = spill_pr.tz_convert("Europe/Brussels").rename(
+    zgr2 = z_gr.tz_convert(TZ)
+    zpr2 = z_pr.tz_convert(TZ)
+    qgr = q_gr.loc[:, "qgr"].tz_convert(TZ)
+    qpr = q_pr.loc[:, "qpr"].tz_convert(TZ)
+    igr2 = I_gr["igr"].tz_convert(TZ)
+    ipr2 = I_pr["ipr"].tz_convert(TZ)
+    p2 = P.tz_convert(TZ)
+    valve2 = valve_position["valve"].tz_convert(TZ)
+    dz2 = dz.tz_convert(TZ)
+    v_pr = v_pr.tz_convert(TZ)
+    v_gr = v_gr.tz_convert(TZ)
+    spill_pr2 = spill_pr.tz_convert(TZ).rename(
         columns={"Value": "spill_pr"}
     )
-    spill_gr2 = spill_gr.tz_convert("Europe/Brussels").rename(
+    spill_gr2 = spill_gr.tz_convert(TZ).rename(
         columns={"Value": "spill_gr"}
     )
 
@@ -272,8 +272,8 @@ def write_model_inputs(
         + (vgr_t_plus_1["Vt+1"] - v_gr["vgr"]) / 3600
     )
     WB_GR = pd.DataFrame(data=WB_GR, columns=["wb_gr"])
-    wb_pr2 = WB_PR.tz_convert("Europe/Brussels").fillna(0)
-    wb_gr2 = WB_GR.tz_convert("Europe/Brussels").fillna(0)
+    wb_pr2 = WB_PR.tz_convert(TZ).fillna(0)
+    wb_gr2 = WB_GR.tz_convert(TZ).fillna(0)
 
     df = pd.concat(
         [
