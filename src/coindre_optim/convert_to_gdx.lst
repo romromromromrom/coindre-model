@@ -1,4 +1,4 @@
-GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 1
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 17:59:59 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -56,7 +56,7 @@ GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\qpr.gdx
 GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_gr.gdx
 --- LOAD  inflows_gr = 1:inflows_gr
   72   
-GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 2
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 17:59:59 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -114,7 +114,7 @@ GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_pr.gdx
  123  SPILL_REALISED('gr',tb) = spill_gr(tb);
  124   
  125  execute_unload "C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx" tb spot inflows_pr inflows_gr unavail P_REALISED VANE_REALISED Z_REALISED zgr zpr DZ_REALISED Q_REALISED qgr qpr vpr vgr V_REALISED WB_REALISED SPILL_REALISED
-GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 3
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 17:59:59 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -123,7 +123,7 @@ C o m p i l a t i o n
  127   
  128  *execute_unload "%GDX_DIR%\import_backtesting.gdx" tb spot inflows_pr inflows_gr unavail P_REALISED VANE_REALISED Z_REALISED zgr zpr DZ
  129   
-GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 4
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 17:59:59 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -167,8 +167,8 @@ Include File Summary
     35      109 GDXIN          1     109  C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_pr.gdx
 
 
-COMPILATION TIME     =        0.858 SECONDS      3 MB  28.1.0 r5b48834 WEX-WEI
-GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 5
+COMPILATION TIME     =        0.733 SECONDS      3 MB  28.1.0 r5b48834 WEX-WEI
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 17:59:59 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 

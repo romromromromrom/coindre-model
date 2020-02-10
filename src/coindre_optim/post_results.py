@@ -2,9 +2,10 @@ import hydrolix_client as hx
 import datetime as dt
 import pandas as pd
 import pytz
+import os
 
 
-def post_results_to_hdx(common_dir):
+def post_results_to_hdx(working_dir):
 
     print(r"... POSTING RESULTS ... POSTING RESULTS ... POSTING RESULTS ... ")
     c = hx.Client(
@@ -15,7 +16,7 @@ def post_results_to_hdx(common_dir):
     scenario = "coindre_model"
 
     df = pd.read_excel(
-        common_dir + r"\run_results.xlsx", index_col=0, sheet_name="results"
+        os.path.join(working_dir,r"run_results.xlsx"), index_col=0, sheet_name="results"
     )
     drange = pd.to_datetime(df.index).tz_convert("Europe/Brussels")
     df2 = pd.DataFrame(data=df.values, index=drange, columns=df.keys())
@@ -34,5 +35,6 @@ def post_results_to_hdx(common_dir):
 
 
 if __name__ == "__main__":
-    common_dir = os.path.dirname(os.path.realpath(__file__))
-    post_results2hdx(common_dir)
+    working_directory = r"C:\Users\WH5939\Documents\runs_gams"
+    post_results_to_hdx(working_directory)
+

@@ -1,2 +1,2 @@
-python.exe "%cd%\coindre_runner.py"
+python.exe "%cd%\gams_daily_runner.py"
 pause
