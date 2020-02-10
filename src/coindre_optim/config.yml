@@ -1,0 +1,26 @@
+---
+
+TIME_ZONE: Europe/Brussels
+WORKING_DIR: C:\Users\WH5939\Documents\runs_gams
+POST_TO_HDX: True
+
+
+HDX:
+  START_DATE:
+  END_DATE:
+  PERSONAL_API_KEY: 5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj
+  NUMBER_OF_DAYS: 14
+GAMS:
+  GAMS_PATH: C:\Gams\win64\28.1\gams.exe
+  IDE: ide=%gams.ide% lo=%gams.lo% errorlog=%gams.errorlog% errmsg=1
+  INFLOWS_FACTOR_GR: 1
+  INFLOWS_FACTOR_PR: 1
+  KEEP_UC_SCHEDULE: 1
+  LOCK_PRODUCTION_PLAN: 24
+  MIP_GAP: 0.01
+  POST_DIRECTLY_IN_HDX: True
+  RUN_NUM: 0
+  ENABLE_TRANSFER: 1
+  RUN_TIME_LIMIT: 2000
+  WARM_START: 1
+

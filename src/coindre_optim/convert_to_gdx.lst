@@ -1,0 +1,186 @@
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  SETS tb
+   2       i /gr,pr/
+   3  ;
+   4  PARAMETERS
+   5           spot(tb)
+   6           inflows_gr(tb)
+   7           inflows_pr(tb)
+   8           unavail(tb)
+   9           P_REALISED(tb)
+  10           VANE_REALISED(tb)
+  11           zgr(tb)
+  12           zpr(tb)
+  13           DZ_REALISED(tb)
+  14           Z_REALISED(i,tb)
+  15           qgr(tb)
+  16           qpr(tb)
+  17           Q_REALISED(i,tb)
+  18           V_REALISED(i,tb)
+  19           vpr(tb)
+  20           vgr(tb)
+  21           spill_pr(tb)
+  22           spill_gr(tb)
+  23           wb_gr(tb)
+  24           wb_pr(tb)
+  25           WB_REALISED(i,tb)
+  26           SPILL_REALISED(i,tb)
+  27  ;
+  28   
+  32   
+  33   
+  34  *************** CREATION OF THE SEPARTE GDX FILES ******************
+  41   
+  45   
+  46   
+  49   
+  52   
+  55   
+  58   
+  59  ********** CREATION OF THE FULL FILE ************
+  60   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\spot.gdx
+--- LOAD  tb = 2:Dim1
+--- LOAD  spot = 1:spot
+  63   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\qgr.gdx
+--- LOAD  qgr = 1:qgr
+  66   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\qpr.gdx
+--- LOAD  qpr = 1:qpr
+  69   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_gr.gdx
+--- LOAD  inflows_gr = 1:inflows_gr
+  72   
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_pr.gdx
+--- LOAD  inflows_pr = 1:inflows_pr
+  75   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\unavail.gdx
+--- LOAD  unavail = 1:unavail
+  78   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\power.gdx
+--- LOAD  P_REALISED = 1:power
+  81   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\vane_closed.gdx
+--- LOAD  VANE_REALISED = 1:vane_closed
+  84   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\zgr.gdx
+--- LOAD  zgr = 1:zgr
+  87   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\zpr.gdx
+--- LOAD  zpr = 1:zpr
+  90   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\dz.gdx
+--- LOAD  DZ_REALISED = 1:dz
+  93   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\vpr.gdx
+--- LOAD  vpr = 1:vpr
+  96   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\vgr.gdx
+--- LOAD  vgr = 1:vgr
+  99   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_gr.gdx
+--- LOAD  spill_gr = 1:spill_gr
+ 102   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_pr.gdx
+--- LOAD  spill_pr = 1:spill_pr
+ 105   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_gr.gdx
+--- LOAD  wb_gr = 1:wb_gr
+ 108   
+GDXIN   C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_pr.gdx
+--- LOAD  wb_pr = 1:wb_pr
+ 111   
+ 112   
+ 113   
+ 114  Z_REALISED('gr',tb) = zgr(tb);
+ 115  Z_REALISED('pr',tb) = zpr(tb);
+ 116  Q_REALISED('gr',tb) = qgr(tb);
+ 117  Q_REALISED('pr',tb) = qpr(tb);
+ 118  V_REALISED('gr',tb) = vgr(tb);
+ 119  V_REALISED('pr',tb) = vpr(tb);
+ 120  WB_REALISED('pr',tb) = wb_pr(tb);
+ 121  WB_REALISED('gr',tb) = wb_gr(tb);
+ 122  SPILL_REALISED('pr',tb) = spill_pr(tb);
+ 123  SPILL_REALISED('gr',tb) = spill_gr(tb);
+ 124   
+ 125  execute_unload "C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx" tb spot inflows_pr inflows_gr unavail P_REALISED VANE_REALISED Z_REALISED zgr zpr DZ_REALISED Q_REALISED qgr qpr vpr vgr V_REALISED WB_REALISED SPILL_REALISED
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 126   
+ 127   
+ 128  *execute_unload "%GDX_DIR%\import_backtesting.gdx" tb spot inflows_pr inflows_gr unavail P_REALISED VANE_REALISED Z_REALISED zgr zpr DZ
+ 129   
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\convert_to_gdx.gms
+     2       35 CALL           1      35  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\spot.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\spot.gdx" id=spot useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     3       36 CALL           1      36  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\unavail.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\unavail.gdx" id=unavail useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     4       37 CALL           1      37  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\inflows_gr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_gr.gdx" id=inflows_gr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     5       38 CALL           1      38  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\inflows_pr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_pr.gdx" id=inflows_pr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     6       39 CALL           1      39  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\vane_closed.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\vane_closed.gdx" id=vane_closed useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     7       40 CALL           1      40  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\power.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\power.gdx" id=power useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     8       42 CALL           1      42  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\zpr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\zpr.gdx" id=zpr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+     9       43 CALL           1      43  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\zgr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\zgr.gdx" id=zgr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    10       44 CALL           1      44  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\dz.csv"  output="C:\Users\WH5939\Documents\runs_gams\gdx_files\dz.gdx"  id=dz useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    11       47 CALL           1      47  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\qgr.csv"  output="C:\Users\WH5939\Documents\runs_gams\gdx_files\qgr.gdx"  id=qgr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    12       48 CALL           1      48  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\qpr.csv"  output="C:\Users\WH5939\Documents\runs_gams\gdx_files\qpr.gdx"  id=qpr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    13       50 CALL           1      50  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\vgr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\vgr.gdx" id=vgr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    14       51 CALL           1      51  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\vpr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\vpr.gdx" id=vpr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    15       53 CALL           1      53  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\spill_gr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_gr.gdx" id=spill_gr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    16       54 CALL           1      54  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\spill_pr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_pr.gdx" id=spill_pr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    17       56 CALL           1      56  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\wb_gr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_gr.gdx" id=wb_gr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    18       57 CALL           1      57  csv2gdx input="C:\Users\WH5939\Documents\runs_gams\input\wb_pr.csv" output="C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_pr.gdx" id=wb_pr useHeader=y index=1 ColCount=2 value=2 storeZero=y
+    19       61 GDXIN          1      61  C:\Users\WH5939\Documents\runs_gams\gdx_files\spot.gdx
+    20       64 GDXIN          1      64  C:\Users\WH5939\Documents\runs_gams\gdx_files\qgr.gdx
+    21       67 GDXIN          1      67  C:\Users\WH5939\Documents\runs_gams\gdx_files\qpr.gdx
+    22       70 GDXIN          1      70  C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_gr.gdx
+    23       73 GDXIN          1      73  C:\Users\WH5939\Documents\runs_gams\gdx_files\inflows_pr.gdx
+    24       76 GDXIN          1      76  C:\Users\WH5939\Documents\runs_gams\gdx_files\unavail.gdx
+    25       79 GDXIN          1      79  C:\Users\WH5939\Documents\runs_gams\gdx_files\power.gdx
+    26       82 GDXIN          1      82  C:\Users\WH5939\Documents\runs_gams\gdx_files\vane_closed.gdx
+    27       85 GDXIN          1      85  C:\Users\WH5939\Documents\runs_gams\gdx_files\zgr.gdx
+    28       88 GDXIN          1      88  C:\Users\WH5939\Documents\runs_gams\gdx_files\zpr.gdx
+    29       91 GDXIN          1      91  C:\Users\WH5939\Documents\runs_gams\gdx_files\dz.gdx
+    30       94 GDXIN          1      94  C:\Users\WH5939\Documents\runs_gams\gdx_files\vpr.gdx
+    31       97 GDXIN          1      97  C:\Users\WH5939\Documents\runs_gams\gdx_files\vgr.gdx
+    32      100 GDXIN          1     100  C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_gr.gdx
+    33      103 GDXIN          1     103  C:\Users\WH5939\Documents\runs_gams\gdx_files\spill_pr.gdx
+    34      106 GDXIN          1     106  C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_gr.gdx
+    35      109 GDXIN          1     109  C:\Users\WH5939\Documents\runs_gams\gdx_files\wb_pr.gdx
+
+
+COMPILATION TIME     =        0.858 SECONDS      3 MB  28.1.0 r5b48834 WEX-WEI
+GAMS 28.1.0  r5b48834 Released Aug  2, 2019 WEX-WEI x86 64bit/MS Windows                                                                                                                                                               02/10/20 09:57:57 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+EXECUTION TIME       =        0.000 SECONDS      4 MB  28.1.0 r5b48834 WEX-WEI
+
+
+USER: MUD-40 User License                            S190801/0001CO-GEN
+      ENGIE IT, ENGIE IT                                      DC5674-S1
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\convert_to_gdx.gms
+Output     C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\convert_to_gdx.lst

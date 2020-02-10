@@ -1,22 +1,28 @@
+
+
 *###############################################################################################
 *################                                                             ##################
 *################                 COindre OPTimisation tool                   ##################
 *################                                                             ##################
 *###############################################################################################
-$SETGLOBAL COMMON_DIRECTORY C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\COOPT_V7.0
-$SETGLOBAL out_dir %COMMON_DIRECTORY%\output
-$SETGLOBAL PZ_DIR %COMMON_DIRECTORY%\power zones\power_zones.gdx
-$SETGLOBAL BATHY_DIR %COMMON_DIRECTORY%\bathy\bathymetry.gdx
-$SETGLOBAL ADDUCTION_DIR %COMMON_DIRECTORY%\double adduction routines\adduction_planes.gdx
-$SETGLOBAL gdx_dir %COMMON_DIRECTORY%\gdx_files\import_coopt.gdx
-$SETGLOBAL out_name output_COOPT
+$SETGLOBAL XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
+$SETGLOBAL GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
+$SETGLOBAL GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
+$SETGLOBAL IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
+$SETGLOBAL OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
+$SETGLOBAL OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\output.gdx'
+$SETGLOBAL ALL_OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\all_output.gdx'
+$SETGLOBAL PZ_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
+$SETGLOBAL BATHY_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
+$SETGLOBAL ADDUCTION_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
+$SETGLOBAL OUT_NAME output_COOPT
 $SETGLOBAL MIP_GAP 0.001
 $SETGLOBAL RUN_TIME_LIMIT 2000
 $SETGLOBAL NO_TB_FILTER 1
 $SETGLOBAL ENABLE_RESERVED_FLOW_RATE 1
-* NOTE THAT IF NO_tb_FILTER IS ON n_days has no effect the time horizon is the number of days in the input dataset
-$SETGLOBAL n_days 2
-$SETGLOBAL CURRENT_TIME 11
+* NOTE THAT IF NO_tb_FILTER IS ON N_DAYS has no effect the time horizon is the number of days in the input dataset
+$SETGLOBAL N_DAYS 2
+$SETGLOBAL CURRENT_TIME 18
 
 $SETGLOBAL WARM_UP 1
 $SETGLOBAL REFINED_HYDRAULICS 1
@@ -44,6 +50,8 @@ $SETGLOBAL EFF_TURB 0.22
 
 scalar no_tf_filter /%NO_TB_FILTER%/;
 
+
+
 $onEolCom
 *---- options for simulation
 scalar activate_slacks 'if =1 the Volume slacks are allowed to be used for this run ' /%ACTI_SLACKS%/;
@@ -55,11 +63,11 @@ scalar q_lim_corr_sstr 'for qtot<q_lim_corr_sstr there is no correction of qsstr
 scalar qtot_lim_transfer /%QTOT_THRESH_TRANS%/;
 *scalar set_vane_open '1 (resp.0) if the vane should be forced to stay open (resp. equal to the realized data) ' /0/;
 
-scalar spill_costs 'in €/m³' /1/;
+scalar spill_costs 'in euros per m�' /1/;
 scalar inflows_factor_PR 'impacts the inflows' /%INFLOWS_FACT_GR%/;
 scalar inflows_factor_GR 'impacts the inflows' /%INFLOWS_FACT_PR%/;
-scalar start_up_costs 'in €/occurence' /10/;
-scalar vane_costs    'in €/occurence' /100/;
+scalar start_up_costs 'in euros/occurence' /10/;
+scalar vane_costs    'in euros/occurence' /100/;
 scalar activate_su 'include SU and SD costs for the turbine in the objective function' /1/;
 scalar activate_su_vane 'include SU and SD costs for the vane in the objective function' /1/;
 scalar disrete_power_values 'if =1 the values that the turbines will be allowed to take are discrete 0, 4, 19, 25, 34, 36 MW'  /0/;
@@ -127,7 +135,7 @@ parameters
 ;
 
 * read the gdx input for gams
-$gdxin %gdx_dir%
+$gdxin %IMPORT_GDX_PATH%
 $load tb spot unavail inflows_pr inflows_gr P_REALISED VANE_REALISED Z_REALISED DZ_REALISED Q_REALISED V_REALISED
 
 parameter Itot(tb),INFLOW(i,tb);
@@ -145,7 +153,7 @@ scalars U_ini , Vane_ini , y_ini , z_ini;
 *---- Power Zones
 parameter VolPZ_GR(cote_gr)   'Volumes of Grande-Rhue at the breakpoints of the power characteristic' ;
 parameter VolPZ_PR(cote_pr)   'Volumes of Petite-Rhue at the breakpoints of the power characteristic' ;
-$gdxin %PZ_DIR%
+$gdxin %PZ_PATH%
 $load VolPZ_PR VolPZ_GR
 parameter P_max(zone) 'Maximum available power in the different zones of the operating chart'   ;
 P_max(zone) = 19$(ord(zone)=1) + 25$(ord(zone)=2 ) + 34$(ord(zone)=3) + 36$(ord(zone) = 4);
@@ -153,7 +161,7 @@ P_max(zone) = 19$(ord(zone)=1) + 25$(ord(zone)=2 ) + 34$(ord(zone)=3) + 36$(ord(
 *---- Bathymetry
 sets ptBat    'Point index for Petite-Rhue s bathymetry';
 parameter Bathy(i,ptBat,*)  'Volume - Water level characteristic in the basins';
-$gdxin %BATHY_DIR%
+$gdxin %BATHY_PATH%
 $load ptBat Bathy
 
 *---- Adduction domains imported parameters
@@ -172,9 +180,11 @@ parameters seg(case,alpha,index) 'coefficients of the segments that outline the 
            q1(k1,k2)             'exact transfer characteristic'
            q1_approx(k1,k2)      'approximated transfer characteristic '
 ;
-$gdxin %ADDUCTION_DIR%
+$gdxin %ADDUCTION_PATH%
 $load var dz_threshold alpha index seg n j1 j2 k1 k2 q1 q1_approx plan_index seg_index
 $load  zone_add = zone
+
+
 
 *##########################################################################################################
 *###########################                                             ##################################
@@ -616,7 +626,7 @@ display warm_start, second_solve, keep_UC_schedule;
 *        On the long run only a rough estimate of the scheldule is necessary in order to have the right water value.
 
 first_time =  floor(card(tb)*pct_start) ;
-last_time  =  first_time + 24*%n_days% -1 ;
+last_time  =  first_time + 24*%N_DAYS% -1 ;
 tf(tb)$(no_tf_filter) = YES;
 *do not optimize the time buckets that are in the past use the realised data instead.
 tf(tb)$(ord(tb) <= %CURRENT_TIME%) = NO;
@@ -626,7 +636,7 @@ vane_closed.fx(tb)$(ord(tb) <= %LOCK_PRODUCTION_PLAN%) = 1-VANE_REALISED(tb);
 *volume value is the value at the beginnig of the current time bucket. If current time is 14:20:00 PM the last volume fixed value is v.fx('14:20:00 PM')
 v.fx(i,tb)$(ord(tb) <= %CURRENT_TIME%+1) = V_REALISED(i,tb);
 
-DAILY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time + %n_days%*24-1)= yes ;
+DAILY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time + %N_DAYS%*24-1)= yes ;
 THREE_DAILY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time+3*24-1)= yes ;
 WEEKLY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time+7*24-1)= yes ;
 MONTHLY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time + 30*24-1 and ord(tb)<=last_time)= yes ;
@@ -897,20 +907,20 @@ KPI('COOPT','PNL/M³ 24h') = KPI('COOPT','PNL 24h') / sum(tb$(DAILY(tb)),3600*qt
 
 ****** Write the results in GDXs files **************************************
 
-execute_unload '%out_dir%\%out_name% (%RUN_NUM%).gdx' report BACKTEST tb tf  KPI cum_pnl
-execute_unload '%out_dir%\all_results_COOPT.gdx'
-execute 'gdxxrw.exe input="%out_dir%\%out_name% (%RUN_NUM%).gdx" output="%COMMON_DIRECTORY%\run_results.xlsx" par=report rng=raw_results!a1'
+execute_unload '%OUT_PATH%' report BACKTEST tb tf  KPI cum_pnl
+execute_unload '%ALL_OUT_PATH%'
+execute 'gdxxrw.exe input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
 ******* Write the log file *****************************************
-File log "this is the command that saves the log file" /'%out_dir%\COOPT.log'/;
+File log "this is the command that saves the log file" /'%OUT_DIR%\COOPT.log'/;
 ******* Write the csv output files  *****************************************
-File power_schedule /"%out_dir%\power_schedule.csv"/;
-File vane_schedule  /"%out_dir%\vane_schedule.csv"/;
-put power_schedule;
-put ',p(tb)' /;
-loop(tb, put tb.te(tb),',',report(tb,'p(t)'):</);
-put vane_schedule;
-put ',vane_closed(tb)' /;
-loop(tb, put tb.te(tb),',',report(tb,'Vane CLOSED'):</);
+*File power_schedule /"%OUT_DIR%\power_schedule.csv"/;
+*File vane_schedule  /"%OUT_DIR%\vane_schedule.csv"/;
+*put power_schedule;
+*put ',p(tb)' /;
+*loop(tb, put tb.te(tb),',',report(tb,'p(t)'):</);
+*put vane_schedule;
+*put ',vane_closed(tb)' /;
+*loop(tb, put tb.te(tb),',',report(tb,'Vane CLOSED'):</);
 
 
 

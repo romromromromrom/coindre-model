@@ -4,7 +4,7 @@ import pandas as pd
 import pytz
 
 
-def post_results2hdx(common_dir):
+def post_results_to_hdx(common_dir):
 
     print(r"... POSTING RESULTS ... POSTING RESULTS ... POSTING RESULTS ... ")
     c = hx.Client(

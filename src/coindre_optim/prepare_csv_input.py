@@ -1,25 +1,20 @@
 import datetime as dt
 import numpy as np
 import pandas as pd
-
-import coindre_optim.hydrolix_client as hx
-import coindre_optim.pi_simple_client as psc
-from . import TZ
+import hydrolix_client as hx
+import pi_simple_client as psc
+from __init__ import TZ
+import os
 
 #############################################
 
 
-def write_model_inputs(
+def write_model_csv_inputs(
     PERSONAL_API_KEY,
     start_date,
     end_date,
-    common_directory,
+    CSV_INPUT_DIR,
     write_csv=False,
-    plot_brut=True,
-    plot_imbal_pr=False,
-    plot_imbal_gr=False,
-    moving_averages=False,
-    plot_scatters=False,
 ):
 
     c = psc.Client(bypass_proxy=True)
@@ -316,39 +311,28 @@ def write_model_inputs(
     spill_gr2 = df["spill_gr"]
     spill_pr2 = df["spill_pr"]
 
-    if write_csv:
 
-        df.to_csv(path_or_buf=common_directory + "\input\df.csv", header=True)
-        qgr.to_csv(path_or_buf=common_directory + r"\input\qgr.csv", header=True)
-        qpr.to_csv(path_or_buf=common_directory + r"\input\qpr.csv", header=True)
-        zgr.to_csv(path_or_buf=common_directory + r"\input\zgr.csv", header=True)
-        zpr.to_csv(path_or_buf=common_directory + r"\input\zpr.csv", header=True)
-        dz2.to_csv(path_or_buf=common_directory + r"\input\dz.csv", header=True)
-        igr2.to_csv(
-            path_or_buf=common_directory + r"\input\inflows_gr.csv", header=True
-        )
-        ipr2.to_csv(
-            path_or_buf=common_directory + r"\input\inflows_pr.csv", header=True
-        )
-        p2.to_csv(path_or_buf=common_directory + r"\input\power.csv", header=True)
-        vgr.to_csv(path_or_buf=common_directory + r"\input\vgr.csv", header=True)
-        vpr.to_csv(path_or_buf=common_directory + r"\input\vpr.csv", header=True)
-        wb_gr2.to_csv(path_or_buf=common_directory + r"\input\wb_gr.csv", header=True)
-        wb_pr2.to_csv(path_or_buf=common_directory + r"\input\wb_pr.csv", header=True)
-        spill_gr2.to_csv(
-            path_or_buf=common_directory + "\input\spill_gr.csv", header=True
-        )
-        spill_pr2.to_csv(
-            path_or_buf=common_directory + r"\input\spill_pr.csv", header=True
-        )
 
-        vane.to_csv(
-            path_or_buf=common_directory + r"\input\vane_closed.csv", header=True
-        )
-        spot.to_csv(path_or_buf=common_directory + r"\input\spot.csv", header=True)
-        unavail.to_csv(
-            path_or_buf=common_directory + r"\input\unavail.csv", header=True
-        )
+    if write_csv == True:
+
+        df.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"df.csv") , header=True)
+        qgr.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"qgr.csv"), header=True)
+        qpr.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"qpr.csv"), header=True)
+        zgr.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"zgr.csv"), header=True)
+        zpr.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"zpr.csv"), header=True)
+        dz2.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"dz.csv"), header=True)
+        igr2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR,"inflows_gr.csv"), header=True)
+        ipr2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR,"inflows_pr.csv"), header=True)
+        p2.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"power.csv"), header=True)
+        vgr.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"vgr.csv"), header=True)
+        vpr.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"vpr.csv"), header=True)
+        wb_gr2.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"wb_gr.csv"), header=True)
+        wb_pr2.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"wb_pr.csv"), header=True)
+        spill_gr2.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"spill_gr.csv"), header=True)
+        spill_pr2.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"spill_pr.csv"), header=True)
+        vane.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"vane_closed.csv"), header=True)
+        spot.to_csv(path_or_buf = os.path.join(CSV_INPUT_DIR,"spot.csv"), header=True)
+        unavail.to_csv(path_or_buf= os.path.join(CSV_INPUT_DIR,"unavail.csv"), header=True)
 
 
 if __name__ == "__main__":
