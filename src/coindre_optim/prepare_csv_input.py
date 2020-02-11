@@ -1,19 +1,22 @@
+# Python Standard Library
+import os
+# Third Party Library
 import datetime as dt
 import numpy as np
 import pandas as pd
 from . import pi_simple_client as psc
-from .__init__ import TZ
-import os
+from . import hydrolix_client as hx, TZ
+
 
 #############################################
 
 
 def write_model_csv_inputs(
-    PERSONAL_API_KEY, start_date, end_date, CSV_INPUT_DIR, write_csv=False,
+    hx_api_key, start_date, end_date, csv_input_dir, write_csv=False,
 ):
 
     c = psc.Client(bypass_proxy=True)
-    c_hydro = hx.Client(api_key=PERSONAL_API_KEY)
+    c_hydro = hx.Client(api_key=hx_api_key)
 
     I_gr_proposed = c_hydro.get_node_calculated_timeseries(
         target_name="Grande-Rhue_R",
@@ -304,55 +307,36 @@ def write_model_csv_inputs(
 
     if write_csv == True:
 
-        df.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "df.csv"), header=True)
-        qgr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "qgr.csv"), header=True)
-        qpr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "qpr.csv"), header=True)
-        zgr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "zgr.csv"), header=True)
-        zpr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "zpr.csv"), header=True)
-        dz2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "dz.csv"), header=True)
+        df.to_csv(path_or_buf=os.path.join(csv_input_dir, "df.csv"), header=True)
+        qgr.to_csv(path_or_buf=os.path.join(csv_input_dir, "qgr.csv"), header=True)
+        qpr.to_csv(path_or_buf=os.path.join(csv_input_dir, "qpr.csv"), header=True)
+        zgr.to_csv(path_or_buf=os.path.join(csv_input_dir, "zgr.csv"), header=True)
+        zpr.to_csv(path_or_buf=os.path.join(csv_input_dir, "zpr.csv"), header=True)
+        dz2.to_csv(path_or_buf=os.path.join(csv_input_dir, "dz.csv"), header=True)
         igr2.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "inflows_gr.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "inflows_gr.csv"), header=True
         )
         ipr2.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "inflows_pr.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "inflows_pr.csv"), header=True
         )
-        p2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "power.csv"), header=True)
-        vgr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "vgr.csv"), header=True)
-        vpr.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "vpr.csv"), header=True)
-        wb_gr2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "wb_gr.csv"), header=True)
-        wb_pr2.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "wb_pr.csv"), header=True)
+        p2.to_csv(path_or_buf=os.path.join(csv_input_dir, "power.csv"), header=True)
+        vgr.to_csv(path_or_buf=os.path.join(csv_input_dir, "vgr.csv"), header=True)
+        vpr.to_csv(path_or_buf=os.path.join(csv_input_dir, "vpr.csv"), header=True)
+        wb_gr2.to_csv(path_or_buf=os.path.join(csv_input_dir, "wb_gr.csv"), header=True)
+        wb_pr2.to_csv(path_or_buf=os.path.join(csv_input_dir, "wb_pr.csv"), header=True)
         spill_gr2.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "spill_gr.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "spill_gr.csv"), header=True
         )
         spill_pr2.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "spill_pr.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "spill_pr.csv"), header=True
         )
         vane.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "vane_closed.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "vane_closed.csv"), header=True
         )
-        spot.to_csv(path_or_buf=os.path.join(CSV_INPUT_DIR, "spot.csv"), header=True)
+        spot.to_csv(path_or_buf=os.path.join(csv_input_dir, "spot.csv"), header=True)
         unavail.to_csv(
-            path_or_buf=os.path.join(CSV_INPUT_DIR, "unavail.csv"), header=True
+            path_or_buf=os.path.join(csv_input_dir, "unavail.csv"), header=True
         )
 
 
-if __name__ == "__main__":
-    PERSONAL_API_KEY = (
-        "5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj"
-    )
-    start_date = dt.datetime(2020, 1, 1)
-    number_of_days = 14
-    end_date = start_date + dt.timedelta(days=number_of_days)
-    common_dir = r"C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\COOPT_V6.0"
-    write_model_inputs(
-        PERSONAL_API_KEY=PERSONAL_API_KEY,
-        start_date=start_date,
-        end_date=end_date,
-        common_directory=common_dir,
-        write_csv=True,
-        plot_brut=False,
-        plot_imbal_pr=False,
-        plot_imbal_gr=False,
-        moving_averages=False,
-        plot_scatters=False,
-    )
+

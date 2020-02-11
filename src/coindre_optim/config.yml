@@ -1,11 +1,8 @@
 ---
-TIME_ZONE: Europe/Brussels
 WORKING_DIR: C:\Users\WH5939\Documents\runs_gams
 POST_TO_HDX: True
 
 HDX:
-  START_DATE:
-  END_DATE:
   PERSONAL_API_KEY: 5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj
   NUMBER_OF_DAYS: 14
 GAMS:

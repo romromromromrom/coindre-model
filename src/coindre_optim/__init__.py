@@ -1,18 +1,10 @@
-import pytz
-import yaml
+# Standard library imports
 import os
+import pytz
 
 print("__init__.py is being called")
-with open(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")
-) as config:
-    config = yaml.load(config, Loader=yaml.FullLoader)
-
 default_config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")
-
-TZ = pytz.timezone(config["TIME_ZONE"])
-del config
+TZ = pytz.timezone('Europe/Brussels')
 
 if __name__ == "__main__":
-
     pass
