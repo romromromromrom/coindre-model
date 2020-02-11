@@ -1,9 +1,8 @@
 import datetime as dt
 import numpy as np
 import pandas as pd
-import hydrolix_client as hx
-import pi_simple_client as psc
-from __init__ import TZ
+from . import pi_simple_client as psc
+from .__init__ import TZ
 import os
 
 #############################################

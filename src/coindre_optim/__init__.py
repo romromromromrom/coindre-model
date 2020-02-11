@@ -8,8 +8,11 @@ with open(
 ) as config:
     config = yaml.load(config, Loader=yaml.FullLoader)
 
-TZ = pytz.timezone(config["TIME_ZONE"])
+default_config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")
 
+TZ = pytz.timezone(config["TIME_ZONE"])
+del config
 
 if __name__ == "__main__":
-    print(config)
+
+    pass

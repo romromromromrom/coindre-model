@@ -1,11 +1,11 @@
-import hydrolix_client as hx
+from . import hydrolix_client as hx
 import datetime as dt
 import pandas as pd
 import pytz
 import os
 
 
-def post_results_to_hdx(working_dir):
+def post_results_to_hdx(WORKING_DIR):
 
     print(r"... POSTING RESULTS ... POSTING RESULTS ... POSTING RESULTS ... ")
     c = hx.Client(
@@ -16,7 +16,7 @@ def post_results_to_hdx(working_dir):
     scenario = "coindre_model"
 
     df = pd.read_excel(
-        os.path.join(working_dir, r"run_results.xlsx"),
+        os.path.join(WORKING_DIR, r"run_results.xlsx"),
         index_col=0,
         sheet_name="results",
     )
