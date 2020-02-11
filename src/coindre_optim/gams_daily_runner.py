@@ -89,6 +89,7 @@ class coindre_model_instance:
         )
         print("Launching model with command line:    ", cli_run_daily_model)
         os.system(cli_run_daily_model)
+        print(f"Run results stored at {config['WORKING_DIR']}")
 
     def import_and_run(self, start=None, post=True):
         start = (start or dt.datetime.now()).replace(
@@ -105,7 +106,7 @@ class coindre_model_instance:
         self.convert_to_gdx()
         self.run_daily()
         if post == True:
-            self.post_parameters(config["WORKING_DIRECTORY"])
+            self.post_parameters(config["WORKING_DIR"])
 
 
 
@@ -114,3 +115,4 @@ class coindre_model_instance:
 if __name__ == "__main__":
     model_1 = coindre_model_instance(config)
     model_1.import_and_run(post=False)
+

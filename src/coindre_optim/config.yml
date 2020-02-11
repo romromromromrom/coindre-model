@@ -1,9 +1,7 @@
 ---
-
 TIME_ZONE: Europe/Brussels
 WORKING_DIR: C:\Users\WH5939\Documents\runs_gams
 POST_TO_HDX: True
-
 
 HDX:
   START_DATE:
