@@ -5,6 +5,7 @@
 *###############################################################################################
 $setglobal XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
 $setglobal GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
+$setglobal GAMS_POST_TREATMENT_PATH
 $setglobal GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
 $setglobal IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
 $setglobal OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
@@ -627,7 +628,7 @@ IF(second_solve=1,
 *###########################                POST TREATMENTS              ##################################
 *###########################                                             ##################################
 *##########################################################################################################
-$batinclude "%GAMS_SRC_PATH%\post_treatment.gms"
+$batinclude "%GAMS_POST_TREATMENT_PATH%"
 
 
 ****** Write the results in GDXs files **************************************

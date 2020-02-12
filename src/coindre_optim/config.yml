@@ -10,9 +10,9 @@ GAMS:
   IDE: ide=%gams.ide% lo=%gams.lo% errorlog=%gams.errorlog% errmsg=1
   INFLOWS_FACTOR_GR: 1
   INFLOWS_FACTOR_PR: 1
+  WARM_UP: 1
   REFINED_HYDRAULICS: 1
   FILTER_UC_SCHEDULE: 1
-  WARM_UP: 1
   LOCK_PRODUCTION_PLAN: 24
   MIP_GAP: 0.01
   RUN_NUM: 0

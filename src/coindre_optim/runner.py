@@ -90,6 +90,7 @@ class Runner:
                 f'--OUT_PATH="{os.path.join(self._OUT_DIR, "output.gdx")}"',
                 f'--ALL_OUT_PATH="{os.path.join(self._OUT_DIR, "all_output.gdx")}"',
                 f'--GAMS_SRC_PATH="{self._GAMS_SRC_PATH}"',
+                f'--GAMS_POST_TREATMENT_PATH="{os.path.join(self._GAMS_SRC_PATH,"post_treatment.gms")}"',
                 f'--PZ_PATH="{os.path.join(self._GAMS_SRC_PATH, "power_zones.gdx")}"',
                 f'--BATHY_PATH="{os.path.join(self._GAMS_SRC_PATH, "bathymetry.gdx")}"',
                 f'--ADDUCTION_PATH={os.path.join(self._GAMS_SRC_PATH, "adduction_planes.gdx")}',
