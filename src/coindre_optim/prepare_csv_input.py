@@ -7,11 +7,10 @@ import pandas as pd
 from . import pi_simple_client as psc
 from . import hydrolix_client as hx, TZ
 
-
 #############################################
 
-
 def write_model_csv_inputs(
+
     hx_api_key, start_date, end_date, csv_input_dir, write_csv=False,
 ):
 

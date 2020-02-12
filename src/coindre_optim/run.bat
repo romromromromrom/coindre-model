@@ -1,2 +1,5 @@
-python.exe "%cd%\__main__.py"
+cd "%cd%"
+cd ..
+pause
+python.exe -m coindre_optim
 pause
