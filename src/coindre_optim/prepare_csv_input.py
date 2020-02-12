@@ -1,5 +1,6 @@
 # Python Standard Library
 import os
+
 # Third Party Library
 import datetime as dt
 import numpy as np
@@ -9,8 +10,8 @@ from . import hydrolix_client as hx, TZ
 
 #############################################
 
-def write_model_csv_inputs(
 
+def write_model_csv_inputs(
     hx_api_key, start_date, end_date, csv_input_dir, write_csv=False,
 ):
 
@@ -336,6 +337,3 @@ def write_model_csv_inputs(
         unavail.to_csv(
             path_or_buf=os.path.join(csv_input_dir, "unavail.csv"), header=True
         )
-
-
-

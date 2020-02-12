@@ -1,19 +1,19 @@
 # Python standard library
 import os
 import datetime as dt
+
 # Third party library
 import pandas as pd
+
 # Local application library
 import coindre_optim.hydrolix_client as hx
 from . import TZ
 
 
-def post_results_to_hdx(WORKING_DIR,PERSONAL_API_KEY):
+def post_results_to_hdx(WORKING_DIR, PERSONAL_API_KEY):
 
     print(r"... POSTING RESULTS ... POSTING RESULTS ... POSTING RESULTS ... ")
-    c = hx.Client(
-        api_key=PERSONAL_API_KEY
-    )
+    c = hx.Client(api_key=PERSONAL_API_KEY)
     version = TZ.localize(dt.datetime.now().replace(minute=0, second=0, microsecond=0))
     scenario = "coindre_model"
 

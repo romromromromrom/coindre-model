@@ -2,12 +2,15 @@
 import os
 import datetime as dt
 import shutil
+
 # Third party library
 import yaml
+
 # Application specific
 import coindre_optim.prepare_csv_input as prep_csv
 import coindre_optim.post_results as pr
 from . import default_config_path
+
 
 class Runner:
     def __init__(self, config_path=default_config_path):
@@ -18,7 +21,9 @@ class Runner:
         # relative paths and directories of interest in the project
         self._PY_SRC_PATH = os.path.dirname(os.path.realpath(__file__))
         self._GAMS_SRC_PATH = os.path.join(self._PY_SRC_PATH, "GAMS")
-        self._PROJECT_DIR = os.path.realpath(os.path.join(self._PY_SRC_PATH, "..", ".."))
+        self._PROJECT_DIR = os.path.realpath(
+            os.path.join(self._PY_SRC_PATH, "..", "..")
+        )
         self._COINDRE_OPTIM_DIR = os.path.realpath(os.path.join(self._PY_SRC_PATH))
         # using YAML file to find directories to write the model input and output
         self._GDX_DIR = os.path.join(self._config["WORKING_DIR"], "gdx_files")
@@ -33,12 +38,13 @@ class Runner:
                 os.makedirs(p)
         print("* Copying excel template to working directory")
         # check if there is a run_results.xslx template to write in and copy-paste one from the source directory if necessary
-        if not os.path.exists(os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")):
+        if not os.path.exists(
+            os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")
+        ):
             shutil.copyfile(
                 os.path.join(self._COINDRE_OPTIM_DIR, "run_results.xlsx"),
                 os.path.join(self._config["WORKING_DIR"], "run_results.xlsx"),
             )
-
 
     def _get_gams_run_config(self):
         options_cli = ""
@@ -73,7 +79,10 @@ class Runner:
     def _post_parameters(self):
         if self._config["POST_TO_HDX"] == True:
             try:
-                pr.post_results_to_hdx(WORKING_DIR=self._config["WORKING_DIR"],PERSONAL_API_KEY=self._config["HDX"]["PERSONAL_API_KEY"])
+                pr.post_results_to_hdx(
+                    WORKING_DIR=self._config["WORKING_DIR"],
+                    PERSONAL_API_KEY=self._config["HDX"]["PERSONAL_API_KEY"],
+                )
             except:
                 print("A problem occured during the post in Hydrolix")
 
@@ -123,4 +132,3 @@ class Runner:
         self._run_daily()
         if post == True:
             self._post_parameters()
-
