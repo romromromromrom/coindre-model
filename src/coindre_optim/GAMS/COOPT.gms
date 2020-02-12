@@ -1,98 +1,82 @@
-*********
-
 *###############################################################################################
 *################                                                             ##################
 *################                 COindre OPTimisation tool                   ##################
 *################                                                             ##################
 *###############################################################################################
-$SETGLOBAL XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
-$SETGLOBAL GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
-$SETGLOBAL GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
-$SETGLOBAL IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
-$SETGLOBAL OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
-$SETGLOBAL OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\output.gdx'
-$SETGLOBAL ALL_OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\all_output.gdx'
-$SETGLOBAL PZ_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
-$SETGLOBAL BATHY_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
-$SETGLOBAL ADDUCTION_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
-$SETGLOBAL OUT_NAME output_COOPT
-$SETGLOBAL MIP_GAP 0.001
-$SETGLOBAL RUN_TIME_LIMIT 2000
-$SETGLOBAL NO_TB_FILTER 1
-$SETGLOBAL ENABLE_RESERVED_FLOW_RATE 1
-* NOTE THAT IF NO_tb_FILTER IS ON N_DAYS has no effect the time horizon is the number of days in the input dataset
-$SETGLOBAL N_DAYS 2
-$SETGLOBAL CURRENT_TIME 16
+$setglobal XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
+$setglobal GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
+$setglobal GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
+$setglobal IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
+$setglobal OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
+$setglobal OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\output.gdx'
+$setglobal ALL_OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\all_output.gdx'
+$setglobal PZ_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
+$setglobal BATHY_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
+$setglobal ADDUCTION_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
+* Default options in gams
+$setglobal OUT_NAME output_COOPT
+$setglobal MIP_GAP 0.001
+$setglobal RUN_TIME_LIMIT 2000
+$setglobal NO_TB_FILTER 1
+$setglobal ENABLE_RESERVED_FLOW_RATE 1
+$setglobal N_DAYS 2
+$setglobal CURRENT_TIME 16
+$setglobal WARM_UP 1
+$setglobal REFINED_HYDRAULICS 1
+$setglobal FILTER_UC_SCHEDULE 1
+$setglobal LOCK_PRODUCTION_PLAN 24
+$setglobal NON_LINEAR_EFF 1
+$setglobal ACTI_SLACKS 1
+$setglobal ACTI_WB_SLACKS 0
+$setglobal ALLO_SPILL 1
+$setglobal DZ_COMP_SSTR 1
+$setglobal CORR_FLO 0.3
+$setglobal QTOT_THRESH_SSTR 15
+$setglobal QTOT_THRESH_TRANS 10
+$setglobal delta_V 2
+$setglobal PCT_START 0
+$setglobal PCT_END 1
+$setglobal VOLUME_INIT_CONDITIONS 1
+$setglobal V_INI_GR  1500000
+$setglobal V_INI_PR  250000
+$setglobal RUN_NUM 2
+$setglobal INFLOWS_FACT_GR 1
+$setglobal INFLOWS_FACT_PR 1
+$setglobal EFF_TURB 0.22
 
-$SETGLOBAL WARM_UP 1
-$SETGLOBAL REFINED_HYDRAULICS 1
-$SETGLOBAL FILTER_UC_SCHEDULE 1
-$SETGLOBAL LOCK_PRODUCTION_PLAN 24
-$SETGLOBAL NON_LINEAR_EFF 1
-
-$SETGLOBAL ACTI_SLACKS 1
-$SETGLOBAL ACTI_WB_SLACKS 0
-$SETGLOBAL ALLO_SPILL 1
-$SETGLOBAL DZ_COMP_SSTR 1
-$SETGLOBAL CORR_FLO 0.3
-$SETGLOBAL QTOT_THRESH_SSTR 15
-$SETGLOBAL QTOT_THRESH_TRANS 10
-$SETGLOBAL delta_V 2
-$SETGLOBAL PCT_START 0
-$SETGLOBAL PCT_END 1
-$SETGLOBAL VOLUME_INIT_CONDITIONS 1
-$SETGLOBAL V_INI_GR  1500000
-$SETGLOBAL V_INI_PR  250000
-$SETGLOBAL RUN_NUM 2
-$SETGLOBAL INFLOWS_FACT_GR 1
-$SETGLOBAL INFLOWS_FACT_PR 1
-$SETGLOBAL EFF_TURB 0.22
-
-scalar no_tf_filter /%NO_TB_FILTER%/;
-
-
-
-$onEolCom
 *---- options for simulation
+* General config
 scalar activate_slacks 'if =1 the Volume slacks are allowed to be used for this run ' /%ACTI_SLACKS%/;
 scalar activate_wb_slacks 'if = 1 the water balance slacks will be used' /%ACTI_WB_SLACKS%/;
 scalar allow_spilling /%ALLO_SPILL%/;
-scalar dz_corr_sstr 'allows correction in dz of qsstr' /%DZ_COMP_SSTR%/;
-scalar corr_flow 'qsstr =(approx.)= (1/3 or 2/3)*Qtot + dz*corr_flow if qtot>q_lim_corr_sstr'/%CORR_FLO%/;
-scalar q_lim_corr_sstr 'for qtot<q_lim_corr_sstr there is no correction of qsstr' /%QTOT_THRESH_SSTR%/;
-scalar qtot_lim_transfer /%QTOT_THRESH_TRANS%/;
-*scalar set_vane_open '1 (resp.0) if the vane should be forced to stay open (resp. equal to the realized data) ' /0/;
-
-scalar spill_costs 'in euros per m�' /1/;
+* General hydraulics
 scalar inflows_factor_PR 'impacts the inflows' /%INFLOWS_FACT_GR%/;
 scalar inflows_factor_GR 'impacts the inflows' /%INFLOWS_FACT_PR%/;
+scalar tol_vol 'minimal volume in pr and GR is raised by tol_vol and the change of power volumes are raised by this value too in order to have a plan that complies with the OURS, unit is in [scaling_volume*m³]' /%delta_V%/
+* Start-Up and Shut-Down
+scalar spill_costs 'in euros per m^3' /1/;
 scalar start_up_costs 'in euros/occurence' /10/;
 scalar vane_costs    'in euros/occurence' /100/;
 scalar activate_su 'include SU and SD costs for the turbine in the objective function' /1/;
 scalar activate_su_vane 'include SU and SD costs for the vane in the objective function' /1/;
-scalar disrete_power_values 'if =1 the values that the turbines will be allowed to take are discrete 0, 4, 19, 25, 34, 36 MW'  /0/;
-
-SCALAR volume_IC 'set to 1 by default, ICs are imposed in initial volumes without bathymetry conversion' /%VOLUME_INIT_CONDITIONS%/;
-SCALAR scaling_volumes 'constant that scale the volumes in the display window' /1E4/;
-
-SCALAR tol_vol 'minimal volume in pr and GR is raised by tol_vol and the change of power volumes are raised by this value too in order to have a plan that complies with the OURS, unit is in [scaling_volume*m³]' /%delta_V%/
-SCALAR USE_WATER_VALUE_FC '0: do not take the water value and the final stock of water as a term in the objective function - 1: include Vfinal*water_value in the objective function' /0/;
-*scalar pct_start 'the model will start solving for ord(tb)>=pct_start*card(tb)'  /0.41/;
-*scalar pct_end 'the model will stop  solving for ord(tb)<=pct_end*card(tb)'  /0.415/;
-
+* Transfer
+scalar qtot_lim_transfer /%QTOT_THRESH_TRANS%/;
+scalar dz_corr_sstr 'allows correction in dz of qsstr' /%DZ_COMP_SSTR%/;
+scalar corr_flow 'qsstr =(approx.)= (1/3 or 2/3)*Qtot + dz*corr_flow if qtot>q_lim_corr_sstr'/%CORR_FLO%/;
+scalar q_lim_corr_sstr 'for qtot<q_lim_corr_sstr there is no correction of qsstr' /%QTOT_THRESH_SSTR%/;
+* Time horizon definition
+scalar no_tf_filter /%NO_TB_FILTER%/;
 scalar pct_start 'the model will start solving for ord(tb)>=pct_start*card(tb)'  ;  pct_start = %PCT_START% ;
 scalar pct_end 'the model will stop  solving for ord(tb)<=pct_end*card(tb)'  ;      pct_end = %PCT_END% ;
-*scalar pct_start 'the model will start solving for ord(tb)>=pct_start*card(tb)'  /0.64/;
-*scalar pct_end 'the model will stop  solving for ord(tb)<=pct_end*card(tb)'  /0.66/;
-
+* Display options
+scalar volume_IC 'set to 1 by default, ICs are imposed in initial volumes without bathymetry conversion' /%VOLUME_INIT_CONDITIONS%/;
+scalar scaling_volumes 'constant that scale the volumes in the display window' /1E4/;
+* Backtesting of the hydraulic behaviour
 scalar backtesting_hydraulics 'set it to 1 if you want to impose q1,q2 and vane' /0/;
 scalar backtesting_optim 'set to 1 if you want to output the realized data with the results' /1/;
-option MIP = CPLEX;
-option optCR = 0.001;
+*----
 
-
-
-*---- Sets declaration
+*---- sets declaration
 sets
 tb       'time buckets used in the optimization problem (will be loaded from HDX import data file)'
 tf(tb)   'filters the set tb for the time buckets defined by pct_start and pct_end'
@@ -103,15 +87,15 @@ cote_gr  'water height intervals in Grande-Rhue'                  /"686.28","689
 case     'the different flow cases "Without transfer" , "Grande-Rhue to Petite-Rhue" , "Petite-Rhue to Grande-Rhue"' /sstr,grpr,prgr/
 ;
 **  OPTIONS FOR THE SOLVE STATEMENT **
-SET refine_transfer(tb);
-SETS first_order(tb),second_order(tb);
-SETS additive(tb),addi_refined(tb)'addi_refined used 2segs on GR and 4 segs in PR',ours_bat(tb)'replicates bathy of shemWa exactly';
-** SETS FOR THE DIFFERENT GRANULARITIES
-SET DAILY(tb) 'This is a filter for the first 24 TBs';
-SET THREE_DAILY(tb) 'This is a filter for the first 72 TBs';
-SET WEEKLY(tb) 'This is a filter for the first Week TBs';
-SET MONTHLY(tb) 'This is a filter for the first Month TBs';
-Parameter water_value(i) /gr 0,pr 0/;
+set refine_transfer(tb);
+sets first_order(tb),second_order(tb);
+sets additive(tb),addi_refined(tb)'addi_refined used 2segs on GR and 4 segs in PR',ours_bat(tb)'replicates bathy of shemWa exactly';
+** sets FOR THE DIFFERENT GRANULARITIES
+set DAILY(tb) 'This is a filter for the first 24 TBs';
+set THREE_DAILY(tb) 'This is a filter for the first 72 TBs';
+set WEEKLY(tb) 'This is a filter for the first Week TBs';
+set MONTHLY(tb) 'This is a filter for the first Month TBs';
+parameter water_value(i) /gr 0,pr 0/;
 scalars first_time,last_time;
 
 *###############################################################################################
@@ -120,7 +104,7 @@ scalars first_time,last_time;
 *################                                                             ##################
 *###############################################################################################
 * Dynamic inputs (Hydrolix)
-parameters
+parameter
           spot(tb)
           inflows_gr(tb)
           inflows_pr(tb)
@@ -164,7 +148,7 @@ parameter Bathy(i,ptBat,*)  'Volume - Water level characteristic in the basins';
 $gdxin %BATHY_PATH%
 $load ptBat Bathy
 
-*---- Adduction domains imported parameters
+*---- Adduction domains imported parameter
 set alpha 'the equation of the segments are written sg(dz) = dz*alpha1 + alpha2 '
     var   '[q , dz , 1] is the vector of variables'
     index 'just an index'
@@ -175,7 +159,7 @@ set alpha 'the equation of the segments are written sg(dz) = dz*alpha1 + alpha2 
     seg_index(case,index) 'serves to give the maximal indexes for different cases, i.e if there is a different number of segments for prgr and for grpr the filter serves'
 ;
 scalars j1,j2,dz_threshold;
-parameters seg(case,alpha,index) 'coefficients of the segments that outline the transfer domains'
+parameter seg(case,alpha,index) 'coefficients of the segments that outline the transfer domains'
            n(var,case,index)     'coefficients of the transfer planes'
            q1(k1,k2)             'exact transfer characteristic'
            q1_approx(k1,k2)      'approximated transfer characteristic '
@@ -188,12 +172,12 @@ $load  zone_add = zone
 
 *##########################################################################################################
 *###########################                                             ##################################
-*###########################                       MODEL                 ##################################
+*###########################                   Variables                 ##################################
 *###########################                                             ##################################
 *##########################################################################################################
 * ----------- Declaration of variables  -------------------------------------------------------------------
-SET sign /'+','-'/;
-SET seg_bat_refined /segBatRef1*segBatRef4/;
+set sign /'+','-'/;
+set seg_bat_refined /segBatRef1*segBatRef4/;
 binary variables u(tb)                   'ON/OFF state variable '
                  x(zone,tb)              'this is the variable that tells you what is the maximal power allowed in each region'
                  vane_closed(tb)         'this variable is 1 if the vane is closed'
@@ -240,8 +224,11 @@ positive variables slack_Vmin(i,tb),slack_Vmax(i,tb) 'slacks allow us to look at
                    sd_vane(tb)      'is forced to 1 if the vane is opened'
 
 ;
-*--------------------------- Hard bounds and fixed values -------------------------------------------------
-*------------------------           Min and Max
+*##########################################################################################################
+*###########################                                             ##################################
+*###########################               INITIAL CONDITIONS            ##################################
+*###########################                                             ##################################
+*##########################################################################################################
 Scalars Pmax /36/
         Pmin /10/;
 Pmin$(backtesting_hydraulics=1) = -5;
@@ -298,17 +285,12 @@ slack_Vmin.fx('pr',tb)$(activate_slacks=0) = 0 ;
 
 
 
-
-
-
-
-
-
-
-
-
-*########################### __________  CONSTRAINTS AND EQUATIONS  ____________  #########################
-
+*##########################################################################################################
+*###########################                                             ##################################
+*###########################                      MODEL                  ##################################
+*###########################                                             ##################################
+*##########################################################################################################
+*---- DECLARATION
 equations
 EQ_SU_U                    'forces the value of the start up variable to 1'
 EQ_SD_U                    'forces the value of the shutdown of u to 1 '
@@ -399,6 +381,9 @@ EQ_DEF_SU_SD_COST    'Start up total cost is proprotional to the number of start
 EQ_DEF_OF            'Objective function is a weighed sum of todays profits and the value of the remaining water at the end of the optimization period'
 ;
 
+
+
+*---- MODEL FORMULATION
 *********************     LOGICAL EQUATIONS   ****************************************************************************
 EQ_SU_U(tb)$(ord(tb)<=card(tb)-1 and activate_su and tf(tb)) ..                                   su(tb) =g= u(tb+1)-u(tb);
 EQ_SD_U(tb)$(ord(tb)<=card(tb)-1 and activate_su and tf(tb) and no) ..                            sd(tb) =g= -(u(tb+1)-u(tb));
@@ -428,32 +413,17 @@ EQ_QTOT_NON_LINEAR_EFF_2(tb)$(tf(tb) and %NON_LINEAR_EFF%) ..              qtot(
 EQ_QTOT_NON_LINEAR_EFF_3(tb)$(tf(tb) and %NON_LINEAR_EFF%) ..              qtot(tb) =G= 1.660878863*p(tb) - 7.910577679 ;
 EQ_QTOT_NON_LINEAR_EFF_4(tb)$(tf(tb) and %NON_LINEAR_EFF%) ..              qtot(tb) =G= 1.958733425*p(tb) - 18.03763277 ;
 
-
 EQ_QTOT_UP_LIM(tb)$(tf(tb) and backtesting_hydraulics=0) ..                      qtot(tb) =l= Qtot_max*u(tb);
 EQ_QTOT_LO_LIM(tb)$(tf(tb) and backtesting_hydraulics=0) ..                      qtot(tb) =g= Qtot_min*u(tb);
 
-*EQ_QSSTR_PR_VANE_CLOSED_UP(tb)$(tf(tb) and no) ..                    q_sstr('pr',tb) =g= -[1+(1-n('qt','sstr','index1'))*Qtot_max]*(1-vane_closed(tb));
-*EQ_QSSTR_PR_VANE_CLOSED_LO(tb)$(tf(tb) and no) ..                    q_sstr('pr',tb) =l=  [1+(1-n('qt','sstr','index1'))*Qtot_max]*(1-vane_closed(tb));
-
-
-
-** go to the top to see the control parameters q_lim_corr and corr_flow
 EQ_QSSTR_NODAL_BALANCE(tb)$(tf(tb)) ..                    qtot(tb) =e= q_sstr('pr',tb) + q_sstr('gr',tb);
 EQ_QSSTR_GR(tb)$(tf(tb)) ..                        q_sstr('gr',tb) =g= n('qt','sstr','index1')*qtot(tb)+[-corr_flow*dz(tb)]$(dz_corr_sstr=1) - Qtot_max*(1-u(tb));
- ;
-*here another equaation should be added in order to allow q2_sstr(tb) when vane(tb)=1 and vane(tb+1)=0
+
 EQ_QSSTR_GR_VANE_CLOSED(tb)$(tf(tb)) ..            q_sstr('gr',tb) =g= qtot(tb) - (1 - vane_closed(tb))*Qtot_max;
 EQ_QSSTR_PR(tb)$(tf(tb)) ..                        q_sstr('pr',tb) =g= (1-n('qt','sstr','index1'))*qtot(tb)+ [corr_flow*dz(tb)]$(dz_corr_sstr=1) - Qtot_max*vane_closed(tb)- Qtot_max*(1-u(tb));
 
-
 ********************  TRANSFER  ************************************************************************************
-
-*scalar transfer_flow /5.2974/;
-
-
-
 scalars
-
          transfer_flow_corrected /-1.5486/
          intersect_flow  /1.75/
          DZ_0 /0.266630/
@@ -477,92 +447,85 @@ EQ_Q_TRANS_COMPONENTS_POS_UP_OFF(tb)$(tf(tb)and refine_transfer(tb))..    q1_tra
 EQ_Q_TRANS_COMPONENTS_POS_LO_OFF(tb)$(tf(tb)and refine_transfer(tb))..    q1_trans_add('+',tb) =g= -Qtot_max*(dz_loc('+',tb));
 
 EQ_Q_TRANS_ADDITION(tb)$(tf(tb)) ..             q1_trans(tb) =e= flow_0(tb)*dz(tb)
-                                                                 + [q1_trans_add('-',tb) + q1_trans_add('+',tb)]$(refine_transfer(tb)) ;
+                                                                 + [q1_trans_add('-',tb)
+                                                                 +  q1_trans_add('+',tb)]$(refine_transfer(tb)) ;
 
-
-SET sqrt_domain(tb),simple(tb);sqrt_domain(tb) =no;simple(tb)=yes;
+set sqrt_domain(tb),simple(tb);sqrt_domain(tb) =no;simple(tb)=yes;
 EQ_QTOT_LIM_TRANS_ON(tb)$(tf(tb)) ..          sign_qtot(tb)*Qtot_max  =g= qtot(tb) - [qtot_lim_transfer];
 EQ_QTOT_LIM_TRANS_OFF(tb)$(tf(tb))..     -(1-sign_qtot(tb))*Qtot_max  =l= qtot(tb) - [qtot_lim_transfer];
-
 
 EQ_QTR_AVG_VANE_OFF_UP(tb)$(tf(tb)) ..                    q1tr_avg(tb) =l=   Qtot_max*(1 - vane_closed(tb));
 EQ_QTR_AVG_VANE_OFF_LO(tb)$(tf(tb)) ..                    q1tr_avg(tb) =g=  -Qtot_max*(1 - vane_closed(tb));
 EQ_QTR_AVG_QTOT_OFF_UP(tb)$(tf(tb)) ..                    q1tr_avg(tb) =l=   Qtot_max*(1-sign_qtot(tb));
 EQ_QTR_AVG_QTOT_OFF_LO(tb)$(tf(tb)) ..                    q1tr_avg(tb) =g=  -Qtot_max*(1-sign_qtot(tb));
 
-
-
 EQ_QTR_AVG_DEF_UP(tb)$(tf(tb)) ..       q1tr_avg(tb) =l=  [0.5*q1_trans(tb)+0.5*q1_trans(tb+1)                      ]$[first_order(tb)]
                                                          +[5/12*q1_trans(tb)+ 2/3*q1_trans(tb+1)-1/12*q1_trans(tb+2)]$[second_order(tb)]
                                                          + Qtot_max*(sign_qtot(tb) + vane_closed(tb));
+
 EQ_QTR_AVG_DEF_LO(tb)$(tf(tb)) ..       q1tr_avg(tb) =g=  [0.5*q1_trans(tb)+0.5*q1_trans(tb+1)                      ]$[first_order(tb)]
                                                          +[5/12*q1_trans(tb)+ 2/3*q1_trans(tb+1)-1/12*q1_trans(tb+2)]$[second_order(tb)]
                                                          - Qtot_max*(sign_qtot(tb) + vane_closed(tb));
 
-
 ********************  FLOWS AND WATER BALANCE ****************************************************************************
-EQ_V_UP_SLACK(i,tb)$(tf(tb) and (ord(tb)>%LOCK_PRODUCTION_PLAN%+1)) ..                       v(i,tb) =l=  slack_Vmax(i,tb)  + [Vmax_gr$(ord(i)=1) + Vmax_pr$(ord(i)=2)-tol_vol*1E4] ;
-EQ_V_LO_SLACK(i,tb)$(tf(tb) and (ord(tb)>%LOCK_PRODUCTION_PLAN%+1)) ..                       v(i,tb) =g= -slack_Vmin(i,tb)  + [Vmin_gr$(ord(i)=1) + Vmin_pr$(ord(i)=2)+tol_vol*1E4] ;
+EQ_V_UP_SLACK(i,tb)$(tf(tb) and (ord(tb)>%LOCK_PRODUCTION_PLAN%+1)) ..  v(i,tb) =l=  slack_Vmax(i,tb)  + [Vmax_gr$(ord(i)=1) + Vmax_pr$(ord(i)=2)-tol_vol*1E4] ;
+EQ_V_LO_SLACK(i,tb)$(tf(tb) and (ord(tb)>%LOCK_PRODUCTION_PLAN%+1)) ..  v(i,tb) =g= -slack_Vmin(i,tb)  + [Vmin_gr$(ord(i)=1) + Vmin_pr$(ord(i)=2)+tol_vol*1E4] ;
 
 parameter Q_ECO_RESERVED(i) /pr 0.309 ,gr 0.63 /;
-EQ_WATER_BALANCE_GRADIENT(i,tb)$(tf(tb))..                   gradient(i,tb)=e= 3600*( INFLOW(i,tb)
-                                                                                   -[  q_sstr(i,tb)
-                                                                                     + Q_ECO_RESERVED(i)$(%ENABLE_RESERVED_FLOW_RATE%)
-                                                                                     + q1tr_avg(tb)$[ord(i)=1]
-                                                                                     - q1tr_avg(tb)$[ord(i)=2]]);
+EQ_WATER_BALANCE_GRADIENT(i,tb)$(tf(tb))..   gradient(i,tb)=e= 3600*( INFLOW(i,tb)
+                                                                  -[  q_sstr(i,tb)
+                                                                  + Q_ECO_RESERVED(i)$(%ENABLE_RESERVED_FLOW_RATE%)
+                                                                  + q1tr_avg(tb)$[ord(i)=1]
+                                                                  - q1tr_avg(tb)$[ord(i)=2]]);
 
+EQ_WATER_BALANCE(i,tb+1)$(ord(tb)<=card(tb)-1 and tf(tb)) ..   v(i,tb+1) =L= v(i,tb) + gradient(i,tb) + slack_wb_pos(i,tb) - slack_wb_neg(i,tb) ;
 
-
-EQ_WATER_BALANCE(i,tb+1)$(ord(tb)<=card(tb)-1 and tf(tb)) ..           v(i,tb+1) =L= v(i,tb) + gradient(i,tb) + slack_wb_pos(i,tb) - slack_wb_neg(i,tb) ;
-EQ_SPILL(i,tb)$(ord(tb)<=card(tb)-1 and tf(tb) and backtesting_hydraulics=0 ) ..       spill(i,tb)*3600 =G= v(i,tb) -v(i,tb+1) + gradient(i,tb) ;
+EQ_SPILL(i,tb)$(ord(tb)<=card(tb)-1 and tf(tb) and backtesting_hydraulics=0 ) ..  spill(i,tb)*3600 =G= v(i,tb) -v(i,tb+1) + gradient(i,tb) ;
 
 ********************  CONVERSION V TO Z ************************************************************************************
-
-SET segment /seg1,seg2/;
-
-PARAMETERS alpha_bat(i,segment),beta_bat(i,segment);
+set segment /seg1,seg2/;
+parameter alpha_bat(i,segment),beta_bat(i,segment);
 alpha_bat('pr','seg1')= 4.5104261/(1E5); alpha_bat('gr','seg1')= 4.4871971/(1E6);
 beta_bat('pr','seg1') = 684.7; beta_bat('pr','seg2') = 686.24429; beta_bat('gr','seg1') = 686.28 ;
-*** for 2 segments ****
 
+*** for 2 segments ****
 EQ_BATHY_SEG_1_ON(i,tb)$(tf(tb) and (additive(tb)) and (not addi_refined(tb)))..
--seg1_bathy(i,tb)*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)] =L=  v(i,tb) - [Bathy(i,'ptBat5','volume')$(ord(i)=2) + Bathy(i,'ptBat4','volume')$(ord(i)=1)]
-;
+-seg1_bathy(i,tb)*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)] =L=  v(i,tb) - [Bathy(i,'ptBat5','volume')$(ord(i)=2)
+                                                                         +  Bathy(i,'ptBat4','volume')$(ord(i)=1)] ;
+
 EQ_BATHY_SEG_1_OFF(i,tb)$(tf(tb) and (additive(tb)) and (not addi_refined(tb)))..
-(1-seg1_bathy(i,tb))*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)] =G=  v(i,tb) - [Bathy(i,'ptBat5','volume')$(ord(i)=2) + Bathy(i,'ptBat4','volume')$(ord(i)=1)]
-;
+(1-seg1_bathy(i,tb))*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)] =G=  v(i,tb) - [Bathy(i,'ptBat5','volume')$(ord(i)=2)
+                                                                            +  Bathy(i,'ptBat4','volume')$(ord(i)=1)];
 
 **** for 2 segments on GR and 4 segments on PR *****
-PARAMETER nb_segs_bat(i) /pr 4,gr 2/;
-PARAMETER alpha_corr_refined(i,seg_bat_refined);
-PARAMETER vol_corr_refined(i,seg_bat_refined);
+parameter nb_segs_bat(i) /pr 4,gr 2/;
+parameter alpha_corr_refined(i,seg_bat_refined);
+parameter vol_corr_refined(i,seg_bat_refined);
 alpha_corr_refined('pr','segBatRef2') = -1.45*1E-5; vol_corr_refined('pr','segBatRef2') = Bathy('pr','ptBat5','volume') ;
 alpha_corr_refined('pr','segBatRef3') = -0.5*1E-5; vol_corr_refined('pr','segBatRef3') = Bathy('pr','ptBat7','volume') ;
 alpha_corr_refined('pr','segBatRef4') = -0.5*1E-5; vol_corr_refined('pr','segBatRef4') = Bathy('pr','ptBat9','volume') ;
 alpha_corr_refined('gr','segBatRef2') = -1.55*1E-6; vol_corr_refined('gr','segBatRef2') = Bathy('gr','ptBat4','volume') ;
 
 EQ_BATHY_REF_SEG_ON(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
-    seg_bathy_refined(i,seg_bat_refined,tb)*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)]   =G=  v(i,tb) -  vol_corr_refined(i,seg_bat_refined)
-;
+    seg_bathy_refined(i,seg_bat_refined,tb)*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)]   =G=  v(i,tb) -  vol_corr_refined(i,seg_bat_refined) ;
+
 EQ_BATHY_REF_SEG_OFF(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
--(1-seg_bathy_refined(i,seg_bat_refined,tb))*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)]  =L=  v(i,tb) - vol_corr_refined(i,seg_bat_refined)
-;
+-(1-seg_bathy_refined(i,seg_bat_refined,tb))*[Vmax_pr$(ord(i)=2) + Vmax_gr$(ord(i)=1)]  =L=  v(i,tb) - vol_corr_refined(i,seg_bat_refined) ;
+
 EQ_Z_ADD_REFINED_UP_ON(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
-z_add_ref(i,seg_bat_refined,tb) =G= alpha_corr_refined(i,seg_bat_refined)*(v(i,tb) - vol_corr_refined(i,seg_bat_refined)) - 10*(1-seg_bathy_refined(i,seg_bat_refined,tb))
-;
+z_add_ref(i,seg_bat_refined,tb) =G= alpha_corr_refined(i,seg_bat_refined)*(v(i,tb) - vol_corr_refined(i,seg_bat_refined)) - 10*(1-seg_bathy_refined(i,seg_bat_refined,tb)) ;
+
 EQ_Z_ADD_REFINED_LO_ON(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
-z_add_ref(i,seg_bat_refined,tb) =L= alpha_corr_refined(i,seg_bat_refined)*(v(i,tb) - vol_corr_refined(i,seg_bat_refined)) + 10*(1-seg_bathy_refined(i,seg_bat_refined,tb))
-;
+z_add_ref(i,seg_bat_refined,tb) =L= alpha_corr_refined(i,seg_bat_refined)*(v(i,tb) - vol_corr_refined(i,seg_bat_refined)) + 10*(1-seg_bathy_refined(i,seg_bat_refined,tb)) ;
+
 EQ_Z_ADD_REFINED_UP_OFF(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
-z_add_ref(i,seg_bat_refined,tb) =L=  10*seg_bathy_refined(i,seg_bat_refined,tb)
-;
+z_add_ref(i,seg_bat_refined,tb) =L=  10*seg_bathy_refined(i,seg_bat_refined,tb) ;
+
 EQ_Z_ADD_REFINED_LO_OFF(i,seg_bat_refined,tb)$(tf(tb) and (additive(tb)) and addi_refined(tb) and ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2)  ..
-z_add_ref(i,seg_bat_refined,tb) =G=  -10*seg_bathy_refined(i,seg_bat_refined,tb)
-;
+z_add_ref(i,seg_bat_refined,tb) =G=  -10*seg_bathy_refined(i,seg_bat_refined,tb) ;
 
 
-
-PARAMETERS alpha_add(i);
+parameter alpha_add(i);
 alpha_add('pr') = -1.7*0.00001; alpha_add('gr') = -1.55*0.000001;
 EQ_Z_ADD_UP_ON(i,tb)$(tf(tb) and additive(tb))..  z_add(i,tb) =l= alpha_add(i)*(v(i,tb)-[Bathy(i,'ptBat5','volume')$(ord(i)=2)+Bathy(i,'ptBat4','volume')$(ord(i)=1)]) + (seg1_bathy(i,tb))*10;
 EQ_Z_ADD_LO_ON(i,tb)$(tf(tb) and additive(tb))..  z_add(i,tb) =g= alpha_add(i)*(v(i,tb)-[Bathy(i,'ptBat5','volume')$(ord(i)=2)+Bathy(i,'ptBat4','volume')$(ord(i)=1)]) - (seg1_bathy(i,tb))*3;
@@ -570,17 +533,12 @@ EQ_Z_ADD_UP_OFF(i,tb)$(tf(tb) and additive(tb)).. z_add(i,tb) =l= (1-seg1_bathy(
 EQ_Z_ADD_LO_OFF(i,tb)$(tf(tb) and additive(tb)).. z_add(i,tb) =g= -(1-seg1_bathy(i,tb))*10;
 
 EQ_CONVERSION_V_TO_WATER_LEVELS_ADD_UP(i,segment,tb)$(tf(tb))..
-z(i,tb) =L= [alpha_bat(i,'seg1')]*v(i,tb) + beta_bat(i,'seg1') + z_add(i,tb)$[additive(tb) and (not addi_refined(tb))]
-+sum(seg_bat_refined$(ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2),z_add_ref(i,seg_bat_refined,tb))$[addi_refined(tb) and additive(tb)]
-;
-
-
+                         z(i,tb) =L= [alpha_bat(i,'seg1')]*v(i,tb) + beta_bat(i,'seg1') + z_add(i,tb)$[additive(tb) and (not addi_refined(tb))]
++sum(seg_bat_refined$(ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2),z_add_ref(i,seg_bat_refined,tb))$[addi_refined(tb) and additive(tb)];
 
 EQ_CONVERSION_V_TO_WATER_LEVELS_ADD_LO(i,segment,tb)$(tf(tb))..
-                             z(i,tb) =G= [alpha_bat(i,'seg1')]*v(i,tb) + beta_bat(i,'seg1') + z_add(i,tb)$[additive(tb) and (not addi_refined(tb))]
-+sum(seg_bat_refined$(ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2),z_add_ref(i,seg_bat_refined,tb))$[addi_refined(tb) and additive(tb)]
-;
-
+                         z(i,tb) =G= [alpha_bat(i,'seg1')]*v(i,tb) + beta_bat(i,'seg1') + z_add(i,tb)$[additive(tb) and (not addi_refined(tb))]
++sum(seg_bat_refined$(ord(seg_bat_refined)<=nb_segs_bat(i) and ord(seg_bat_refined)>=2),z_add_ref(i,seg_bat_refined,tb))$[addi_refined(tb) and additive(tb)];
 
 EQ_DEF_DZ(tb)$(tf(tb)) ..                                           dz(tb) =e= (z('pr',tb) - z('gr',tb));
 
@@ -591,29 +549,12 @@ EQ_DEF_SLACKS_COST ..   C_slacks =g=              1E3*sum((tb,i)$(ord(tb)<=card(
 EQ_DEF_SPILL_COST ..     C_spill =g= 3600*spill_costs*sum((tb,i)$(ord(tb)<=card(tb)-1 and tf(tb)), spill(i,tb));
 EQ_DEF_SU_SD_COST  ..       C_su =g=      sum(tb$(ord(tb)<=card(tb)-1 and tf(tb)), start_up_costs*(su(tb) + sd(tb)) + vane_costs*(su_vane(tb) + sd_vane(tb)));
 
-EQ_DEF_OF       ..            of =l= pnl - C_slacks - C_spill - C_su + [ sum((tb,i)$(ord(tb)=first_time+23),v(i,tb)*water_value(i)) ]$[USE_WATER_VALUE_FC] ;
+EQ_DEF_OF       ..            of =l= pnl - C_slacks - C_spill - C_su + sum((tb,i)$(ord(tb)=first_time+23),v(i,tb)*water_value(i));
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-*##########################################################################################################
-*###########################                                             ##################################
-*###########################    SOLVING AT DIFFERENT TIME GRANULARITY    ##################################
-*###########################                                             ##################################
-*##########################################################################################################
-
-Option limrow = 1000;
+option limrow = 1000;
 model coindre_model /all/;
 scalar warm_start /%WARM_UP%/;
 scalar second_solve /%REFINED_HYDRAULICS%/;
@@ -640,9 +581,6 @@ DAILY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time + %N_DAYS%*24-1)= yes ;
 THREE_DAILY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time+3*24-1)= yes ;
 WEEKLY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time+7*24-1)= yes ;
 MONTHLY(tb)$(ord(tb)>= first_time and ord(tb)<= first_time + 30*24-1 and ord(tb)<=last_time)= yes ;
-
-
-
 
 
 OPTION MIP = Gurobi ;
@@ -673,8 +611,6 @@ IF(second_solve=1,
            u.fx(tb)$(u.l(tb)=0 and DAILY(tb)) = 0;
        );
        backtesting_hydraulics = 0;
-       USE_WATER_VALUE_FC = 1;
-       water_value(i) = 0*sum((tb)$(ord(tb)=first_time+23), EQ_WATER_BALANCE.m(i,tb));
        flow_0(tb)$(DAILY(tb)) = -8.112 ; flow_0(tb)$(not DAILY(tb)) = -3;
        refine_transfer(tb)$(DAILY(tb)) = YES;
        dz_corr_sstr = 1;
@@ -686,241 +622,23 @@ IF(second_solve=1,
 );
 
 
-
-
-
-
-
-
-
-
 *##########################################################################################################
 *###########################                                             ##################################
-*###########################      POST-TREATMENT AND VISUAL OUTPUT       ##################################
+*###########################                POST TREATMENTS              ##################################
 *###########################                                             ##################################
 *##########################################################################################################
-set window(tb)         'filters the timebuckets that we want to see on the screen when plotting the .gdx file ';
-scalars ordmin,ordmax  'Display parameters';
-ordmin =  1 + 1/100*card(tb)*0  ;
-ordmax =  1 + 1/100*card(tb)*100;
-window(tb) = yes$(ord(tb)>= ordmin and ord(tb)<=ordmax and tf(tb)) OR YES;
-
-PARAMETER difference_z(i,tb);
-difference_z(i,tb)$(tf(tb)) = (10*(z.l(i,tb) - Z_REALISED(i,tb))-20)$(z.l(i,tb) - Z_REALISED(i,tb)) + EPS$((z.l(i,tb) - Z_REALISED(i,tb)));
-
-parameter report(tb,*);
-report(tb,'spot')$(window(tb)) = (spot(tb))$(spot(tb)<>0) + Eps$(not spot(tb)<>0);
-report(tb,'inflows_GR')$(window(tb)) = (inflows_gr(tb))$(inflows_gr(tb)<>0) + Eps$(not inflows_gr(tb)<>0);
-report(tb,'inflows_PR')$(window(tb)) = (inflows_pr(tb))$(inflows_pr(tb)<>0) + Eps$(not inflows_pr(tb)<>0);
-report(tb,'indispo (%)')$(window(tb)) = (100*unavail(tb))$(unavail(tb)<>0) + Eps$(not unavail(tb)<>0);
-
-report(tb,'p(t)')$(window(tb)) = (p.l(tb))$(p.l(tb)<>0) + Eps$(not p.l(tb)<>0);
-report(tb,'P_REALISED)')$(window(tb)) = (P_REALISED(tb))$(P_REALISED(tb)<>0) + Eps$(not P_REALISED(tb)<>0);
-
-report(tb,'x19')$(window(tb)) = ((1-unavail(tb))*19*x.l("19MW",tb))$(x.l("19MW",tb)<>0) + Eps$(not x.l("19MW",tb)<>0);
-report(tb,'x25')$(window(tb)) = ((1-unavail(tb))*25*x.l("25MW",tb))$(x.l("25MW",tb)<>0) + Eps$(not x.l("25MW",tb)<>0);
-report(tb,'x34')$(window(tb)) = ((1-unavail(tb))*34*x.l("34MW",tb))$(x.l("34MW",tb)<>0) + Eps$(not x.l("34MW",tb)<>0);
-report(tb,'x36')$(window(tb)) = ((1-unavail(tb))*36*x.l("36MW",tb))$(x.l("36MW",tb)<>0) + Eps$(not x.l("36MW",tb)<>0);
-report(tb,'Vane CLOSED')$(window(tb)) = (10*vane_closed.l(tb))$(vane_closed.l(tb) <>0) + Eps$(not vane_closed.l(tb)<>0);
-report(tb,'VANE_REALISED')$(window(tb)) = (10*(1-VANE_REALISED(tb)))$((1-VANE_REALISED(tb)) <>0) + Eps$(not (1-VANE_REALISED(tb))<>0);
-
-
-report(tb,'v_gr (1E+04 m³)')$(window(tb)) = (v.l('gr',tb)/scaling_volumes)$(v.l('gr',tb)/scaling_volumes<>0) + Eps$(not v.l('gr',tb)/scaling_volumes<>0);
-report(tb,'v_pr (1E+04 m³)')$(window(tb)) = (v.l('pr',tb)/scaling_volumes)$(v.l('pr',tb)/scaling_volumes<>0) + Eps$(not v.l('pr',tb)/scaling_volumes<>0);
-report(tb,'VPR_REALISED (1E+04 m³)')$(window(tb)) = (V_REALISED('pr',tb)/scaling_volumes)$(V_REALISED('pr',tb)<>0) + Eps$(V_REALISED('pr',tb)/scaling_volumes<>0);
-report(tb,'VGR_REALISED (1E+04 m³)')$(window(tb)) = (V_REALISED('gr',tb)/scaling_volumes)$(V_REALISED('gr',tb)<>0) + Eps$(V_REALISED('gr',tb)/scaling_volumes<>0);
-
-
-report(tb,' ZGR_REALISED -  686.28 (in dm)')$(window(tb))=((Z_REALISED('gr',tb)-686.28)*10)$((Z_REALISED('gr',tb)-686.28)*100<>0) + Eps$(not (Z_REALISED('gr',tb)-686.28)*100<>0)  ;
-report(tb,' z_gr  - 686.28 (in dm) ')$(window(tb)) =  ((z.l('gr',tb)-686.28)*10)$((z.l('gr',tb)-686.28)<>0) + Eps$(not z.l('gr',tb)- 686.28<>0)  ;
-report(tb,' seg1_bathy_gr ')$(window(tb)) = [seg1_bathy.l('gr',tb)*10 ]$[seg1_bathy.l('gr',tb)<>0] +EPS$[seg1_bathy.l('gr',tb)=0];
-report(tb,' ZPR_REALISED -  684.70 (in dm)')$(window(tb))=((Z_REALISED('pr',tb)-684.70)*10)$((Z_REALISED('pr',tb)-684.70)*10<>0) + Eps$(not (Z_REALISED('pr',tb)-684.70)*10<>0)  ;
-report(tb,' z_pr -  684.70 (in dm)')$(window(tb)) =  ((z.l('pr',tb)-684.70)*10)$((z.l('pr',tb)-684.70)*100<>0) + Eps$(not (z.l('pr',tb)-684.70)*10<>0)  ;
-report(tb,' seg1_bathy_pr ')$(window(tb)) = [seg1_bathy.l('pr',tb)*10 ]$[seg1_bathy.l('pr',tb)<>0] +EPS$[seg1_bathy.l('pr',tb)=0];
-report(tb,'diff zPR in dm')$(window(tb)) =  difference_z('pr',tb);
-report(tb,'diff zGR in dm')$(window(tb)) =  difference_z('gr',tb);
-
-
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=8000 and v.l('pr',tb)>=0)=10*(3.74999999999943E-05*v.l('pr',tb)+684.7-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=28000 and v.l('pr',tb)>=8000)=10*(0.00005*v.l('pr',tb)+684.6-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=50000 and v.l('pr',tb)>=28000)=10*(4.54545454545455E-05*v.l('pr',tb)+684.727272727273-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=74000 and v.l('pr',tb)>=50000)=10*(4.16666666666667E-05*v.l('pr',tb)+684.916666666667-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=104000 and v.l('pr',tb)>=74000)=10*(3.33333333333333E-05*v.l('pr',tb)+685.533333333333-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=138000 and v.l('pr',tb)>=104000)=10*(2.94117647058824E-05*v.l('pr',tb)+685.941176470588-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=176000 and v.l('pr',tb)>=138000)=10*(2.63157894736842E-05*v.l('pr',tb)+686.368421052632-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=216000 and v.l('pr',tb)>=176000)=10*(0.000025*v.l('pr',tb)+686.6-684.7);
-report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=264000 and v.l('pr',tb)>=216000)=10*(2.08333333333333E-05*v.l('pr',tb)+687.5-684.7);
-report(tb,'zpr_norm RECALC')=report(tb,'zpr_norm RECALC')/10 + 684.7;
-*report(tb,'zpr_norm RECALC')$(window(tb) and report(tb,'zpr_norm RECALC')=0)=EPS;
-
-
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=202000 and v.l('gr',tb)>=0)=10*(5.04950495049496E-06*v.l('gr',tb)+686.28-686.28);
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=435000 and v.l('gr',tb)>=202000)=10*(4.29184549356223E-06*v.l('gr',tb)+686.4330472103-686.28);
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=690000 and v.l('gr',tb)>=435000)=10*(3.92156862745098E-06*v.l('gr',tb)+686.594117647059-686.28);
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=992000 and v.l('gr',tb)>=690000)=10*(3.3112582781457E-06*v.l('gr',tb)+687.015231788079-686.28);
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=1334000 and v.l('gr',tb)>=992000)=10*(2.92397660818713E-06*v.l('gr',tb)+687.399415204678-686.28);
-report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=1593000 and v.l('gr',tb)>=1334000)=10*(2.70270270270288E-06*v.l('gr',tb)+687.694594594594-686.28);
-report(tb,'zgr_norm RECALC')=report(tb,'zgr_norm RECALC')/10 + 686.28;
-*report(tb,'zgr_norm RECALC')$(window(tb) and report(tb,'zgr_norm RECALC')=0)=EPS;
-
-
-
-
-report(tb,'DZ_REALISED')$(window(tb)) = (DZ_REALISED(tb)*10)$(DZ_REALISED(tb)*100<>0) + Eps$(not DZ_REALISED(tb)*100 <>0)  ;
-report(tb,' dz (dm)')$(window(tb)) =  (dz.l(tb)*10)$(dz.l(tb)*10<>0) + Eps$(not dz.l(tb)*100 <>0)  ;
-report(tb,'v_max_GR (1E+04 m³)')$(window(tb)) =  Vmax_gr/scaling_volumes;
-report(tb,'v_max_PR (1E+04 m³)')$(window(tb)) =  Vmax_pr/scaling_volumes;
-
-*********  power zones levels **********************************************
-report(tb,'PR 689.00(1E+04 m³)')$(window(tb)) =  VolPZ_PR("689.00")/scaling_volumes;
-report(tb,'PR 687.00(1E+04 m³)')$(window(tb)) =  VolPZ_PR("687.00")/scaling_volumes;
-report(tb,'PR 686.00(1E+04 m³)')$(window(tb)) =  VolPZ_PR("686.00")/scaling_volumes;
-report(tb,'PR 684.70(1E+04 m³)')$(window(tb)) =  VolPZ_PR("684.70")/scaling_volumes;
-report(tb,'GR 689.00(1E+04 m³)')$(window(tb)) =  VolPZ_GR("689.00")/scaling_volumes;
-
-report(tb,'vPR = 34/36 + tol_vol')$(window(tb)) =  [VolPZ_PR("689.00")]/scaling_volumes + tol_vol;
-report(tb,'vPR = 25/34 + tol_vol')$(window(tb)) = [ VolPZ_PR("687.00")+tol_vol]/scaling_volumes + tol_vol;
-report(tb,'vPR = 19/25 + tol_vol')$(window(tb)) =  [VolPZ_PR("686.00")+tol_vol]/scaling_volumes + tol_vol;
-report(tb,'vPR = 0 + tol_vol')$(window(tb)) =  [VolPZ_PR("684.70")+tol_vol]/scaling_volumes + tol_vol;
-report(tb,'vGR = 34/36 +tol_vol')$(window(tb)) =  [VolPZ_GR("689.00")+tol_vol]/scaling_volumes + tol_vol;
-
-report(tb,'qsstr_pr m³/s')$(window(tb)) = (q_sstr.l('pr',tb))$(q_sstr.l('pr',tb)<>0) + Eps$(not q_sstr.l('pr',tb)<>0);
-report(tb,'qsstr_gr m³/s')$(window(tb)) = (q_sstr.l('gr',tb))$(q_sstr.l('gr',tb)<>0) + Eps$(not q_sstr.l('gr',tb)<>0);
-
-report(tb,'q2 m³/s')$(window(tb)) = (q_sstr.l('pr',tb)-q1tr_avg.l(tb))$(q_sstr.l('pr',tb)-q1tr_avg.l(tb)<>0) + Eps$(not q_sstr.l('pr',tb)-q1tr_avg.l(tb)<>0);
-report(tb,'q1 m³/s')$(window(tb)) = (q_sstr.l('gr',tb)+q1tr_avg.l(tb))$(q_sstr.l('gr',tb)+q1tr_avg.l(tb)<>0) + Eps$(not q_sstr.l('gr',tb)+q1tr_avg.l(tb)<>0);
-report(tb,'QPR_REALISED')$(window(tb)) = (Q_REALISED('pr',tb))$(Q_REALISED('pr',tb)<>0) + Eps$(not Q_REALISED('pr',tb)<>0);
-report(tb,'QGR_REALISED')$(window(tb)) = (Q_REALISED('gr',tb))$(Q_REALISED('gr',tb)<>0) + Eps$(not Q_REALISED('gr',tb)<>0);
-report(tb,'QTOT m³/s')$(window(tb)) = (qtot.l(tb))$(qtot.l(tb) <>0) + EPS$(not qtot.l(tb) <> 0);
-report(tb,'QTOT>lim transfer ')$(window(tb)) = (qtot_lim_transfer *sign_qtot.l(tb))$(qtot_lim_transfer*sign_qtot.l(tb) <>0) + EPS$(not qtot_lim_transfer*sign_qtot.l(tb) <> 0);
-report(tb,'QTOT_REALISED')$(window(tb)) = (sum(i,Q_REALISED(i,tb)))$(sum(i,Q_REALISED(i,tb)) <>0) + EPS$(sum(i,Q_REALISED(i,tb)) = 0);
-report(tb,'qtot-1000p(t)/0.22/3600')$(window(tb)) = (qtot.l(tb)-1000*p.l(tb)/0.22/3600)$(qtot.l(tb)-1000*p.l(tb)/0.22/3600 <>0) + EPS$(not qtot.l(tb)-1000*p.l(tb)/0.22/3600 <> 0);
-
-report(tb,'q1_trans m³/s')$(window(tb)) = q1tr_avg.l(tb)$(q1tr_avg.l(tb) <>0)  + Eps$(q1tr_avg.l(tb)=0) ;
-report(tb,'q1_tr NEG m³/s')$(window(tb)) = q1_trans_add.l('-',tb)$(q1_trans_add.l('-',tb) <>0)  + EPS$(q1_trans_add.l('-',tb)=0) ;
-report(tb,'q1_tr POS m³/s')$(window(tb)) = q1_trans_add.l('+',tb)$(q1_trans_add.l('+',tb) <>0)  + EPS$(q1_trans_add.l('+',tb)=0) ;
-report(tb,'SEG TRANS NEG ')$(window(tb)) = (50*dz_loc.l('-',tb))$(dz_loc.l('-',tb)<>0) + EPS$(dz_loc.l('-',tb)=0);
-report(tb,'SEG TRANS POS')$(window(tb)) =  (60*dz_loc.l('+',tb))$(dz_loc.l('+',tb)<>0) + EPS$(dz_loc.l('+',tb)=0);
-report(tb,'SEG TRANS SYM')$(window(tb)) =  (40)$(dz_loc.l('+',tb)=0 and dz_loc.l('-',tb)=0) + EPS$(dz_loc.l('+',tb)=0 or dz_loc.l('-',tb)=0);
-
-
-report(tb,'spill_pr')$(window(tb)) = (spill.l('pr',tb))$(spill.l('pr',tb)<>0) + Eps$(not spill.l('pr',tb)<>0);
-report(tb,'spill_gr')$(window(tb)) = (spill.l('gr',tb))$(spill.l('gr',tb)<>0) + Eps$(not spill.l('gr',tb)<>0);
-report(tb,'q_gr - 2/3 ou 3/3 Qtot')$(window(tb)) = (q_sstr.l('gr',tb)-((2/3)$(vane_closed.l(tb)=0) + 1$(vane_closed.l(tb)=1))*qtot.l(tb))$(q_sstr.l('gr',tb)-((2/3)$(vane_closed.l(tb)=0) + 1$(vane_closed.l(tb)=1))*qtot.l(tb)<>0) + Eps$(not q_sstr.l('gr',tb)-((2/3)$(vane_closed.l(tb)=0) + 1$(vane_closed.l(tb)=1))*qtot.l(tb)<>0);
-report(tb,'q_pr - 1/3Qtot')$(window(tb)) = (q_sstr.l('pr',tb)-((1/3)$(vane_closed.l(tb)=0)+0$(vane_closed.l(tb)=1))*qtot.l(tb))$(q_sstr.l('pr',tb)-((1/3)$(vane_closed.l(tb)=0)+0$(vane_closed.l(tb)=1))*qtot.l(tb)<>0) + Eps$(not q_sstr.l('pr',tb)-((1/3)$(vane_closed.l(tb)=0)+0$(vane_closed.l(tb)=1))*qtot.l(tb)<>0);
-report(tb,'pmax-p')$(window(tb)) = (-p.l(tb) + sum(zone,P_max(zone)*x.l(zone,tb))*(1-unavail(tb)))$(-p.l(tb) + sum(zone,P_max(zone)*x.l(zone,tb))*(1-unavail(tb))<>0) + Eps$(not -p.l(tb) + sum(zone,P_max(zone)*x.l(zone,tb))*(1-unavail(tb)) <>0);
-
-report(tb,'0 error in water lvl')$(window(tb) and backtesting_hydraulics=1) = -20 ;
-report(tb,'24H')$(window(tb)) = 160$(ord(tb)=first_time+24) + EPS$(not ord(tb)=first_time+24) ;
-
-SET optimizer /hydro_team,COOPT/;
-alias(tb,h);
-PARAMETERS cum_pnl(optimizer,tb);
-cum_pnl("hydro_team",tb)$(window(tb))= sum(h$(ord(h)<=ord(tb) and ord(h)>=first_time), P_REALISED(h)*spot(h) );
-cum_pnl("COOPT",tb)$(window(tb))=  sum(h$(ord(h)<=ord(tb) and ord(h)>=first_time), p.l(h)*spot(h) );
-cum_pnl(optimizer,tb)$(cum_pnl(optimizer,tb)=0)=EPS;
-
-report(tb,'hydro_team cumulated PNL (k€)')$(window(tb))= cum_pnl("hydro_team",tb)/1000+100;
-report(tb,'COOPT cumulated PNL (k€)')$(window(tb))= cum_pnl("COOPT",tb)/1000+100;
-
-***** sets of inconssistent TBs ************************************
-parameter water_imbal(i,tb);
-water_imbal('gr',tb)$(tf(tb))=abs(-v.l('gr',tb+1) + v.l('gr',tb) + gradient.l('gr',tb) );
-water_imbal('pr',tb)$(tf(tb))=abs(-v.l('pr',tb+1) + v.l('pr',tb) + gradient.l('pr',tb));
-parameter nodal_wb(tb); parameter p_not_pmax(tb);
-nodal_wb(tb)$(tf(tb)) = q_sstr.l('pr',tb) + q_sstr.l('gr',tb) - qtot.l(tb) ;
-p_not_pmax(tb)$(tf(tb)) = -p.l(tb) + sum(zone,P_max(zone)*x.l(zone,tb))*(1-unavail(tb)) ;
-parameter qtot_not_at_bound(tb); qtot_not_at_bound(tb)$(tf(tb))=   qtot.l(tb) - 1000*p.l(tb)/0.22/3600;
-
-
-set TBs_WB_GR_not_at_bound(tb); TBs_WB_GR_not_at_bound(tb)$(water_imbal('gr',tb)>1E-7) = yes;
-set TBs_WB_PR_not_at_bound(tb); TBs_WB_PR_not_at_bound(tb)$(water_imbal('pr',tb)>1E-7) = yes;
-set TBs_WB_NODAL_not_at_bound(tb); TBs_WB_NODAL_not_at_bound(tb)$(nodal_wb(tb)> 1E-7) = yes;
-set TBs_P_is_not_Pmax(tb); TBs_P_is_not_Pmax(tb)$(p_not_pmax(tb)>1E-7) = yes;
-set TBs_Slack_PR_Vmax(tb); TBs_Slack_PR_Vmax(tb)$(slack_Vmax.l('pr',tb)>0) = yes ;
-set TBs_Slack_PR_Vmin(tb); TBs_Slack_PR_Vmin(tb)$(slack_Vmin.l('pr',tb)>0) = yes ;
-set TBs_Slack_GR_Vmax(tb); TBs_Slack_GR_Vmax(tb)$(slack_Vmax.l('gr',tb)>0) = yes ;
-set TBs_Slack_GR_Vmin(tb); TBs_Slack_GR_Vmin(tb)$(slack_Vmin.l('gr',tb)>0) = yes ;
-set TBs_qtot_p_not_at_bound(tb); TBs_qtot_p_not_at_bound(tb)$(qtot.l(tb) - 1000*p.l(tb)/0.22/3600 > 1E-7) = yes  ;
-set TBs_spill_in_GR(tb); TBs_spill_in_GR(tb)$(spill.l('gr',tb)>1E-7) = yes;
-set TBs_spill_in_PR(tb); TBs_spill_in_PR(tb)$(spill.l('pr',tb)>1E-7) = yes;
-
-parameter TESTS(*);
-TESTS('TEST_WATER_BALANCE_GR') = 1$( smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('gr',tb)) < 1E-7) + Eps$(not smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('gr',tb)) < 1E-7);
-TESTS('TEST_WATER_BALANCE_PR') = 1$( smax(tb$(ord(tb)<card(tb) and tf(tb)), water_imbal('pr',tb)) < 1E-7) + Eps$(not smax(tb$(ord(tb)<card(tb) and tf(tb)), water_imbal('pr',tb)) < 1E-7);
-TESTS('TEST_SPILL_PRICE') = 1$(smin(tb,Pmin*(1-unavail(tb))*max(0,-spot(tb)))> spill_costs or smin(tb,spot(tb))>0) + Eps$(not Pmin*smin(tb,max(0,-spot(tb)))> spill_costs or smin(tb,spot(tb))>0 );
-TESTS('TEST_NO_SLACKS_USED') = 1$(smax(tb,slack_Vmax.l('gr',tb))<1E-7 and smax(tb, slack_Vmax.l('pr',tb))<1E-7 and smax(tb, slack_Vmin.l('gr',tb))<1E-7 and smax(tb, slack_Vmin.l('pr',tb))<1E-7 ) + Eps$(not smax(tb,slack_Vmax.l('gr',tb))<1E-7 and smax(tb, slack_Vmax.l('pr',tb))<1E-7 and smax(tb, slack_Vmin.l('gr',tb))<1E-7 and smax(tb, slack_Vmin.l('pr',tb))<1E-7  );
-TESTS('TEST_NODAL_WATER_BALANCE') = 1$(smax(tb,nodal_wb(tb))<1E-7) + Eps$(not smax(tb,nodal_wb(tb))<1E-7 );
-TESTS('TEST_QTOT_AT_BOUND') =1$(smax(tb,qtot.l(tb) - 1000*p.l(tb)/0.22/3600)<1E-7) + Eps$(not smax(tb,qtot.l(tb) - 1000*p.l(tb)/0.22/3600)<1E-7 );
-
-
-
-********** parameters for backtesting_hydraulics **********************************
-PARAMETER BACKTEST(*),untightness_qsstr(i,tb);
-
-untightness_qsstr('pr',tb)$( vane_closed.l(tb)=1 ) = q_sstr.l('pr',tb) - 0  ;
-untightness_qsstr('pr',tb)$( vane_closed.l(tb)=0 and u.l(tb)=1) = q_sstr.l('pr',tb) - [ (1 - n('qt','sstr','index1'))*qtot.l(tb) + corr_flow*dz.l(tb)  ];
-untightness_qsstr('pr',tb)$( vane_closed.l(tb)=0 and u.l(tb)=0) = q_sstr.l('pr',tb) - 0 ;
-
-untightness_qsstr('gr',tb)$( vane_closed.l(tb)=1 and u.l(tb)=1) = q_sstr.l('gr',tb) - qtot.l(tb)  ;
-untightness_qsstr('gr',tb)$( vane_closed.l(tb)=0 and u.l(tb)=0) = q_sstr.l('gr',tb) ;
-untightness_qsstr('gr',tb)$( vane_closed.l(tb)=0 and u.l(tb)=1) = q_sstr.l('gr',tb) - [n('qt','sstr','index1')*qtot.l(tb) - corr_flow*dz.l(tb)];
-
-
-BACKTEST(' qsstr GR not @bound  ') =[smax(tb$(tf(tb)),untightness_qsstr('gr',tb) )]$[smax(tb$(tf(tb)),untightness_qsstr('gr',tb) )>1E-7];
-BACKTEST(' qsstr PR not @bound  ') =[smax(tb$(tf(tb)),untightness_qsstr('pr',tb) )]$[smax(tb$(tf(tb)),untightness_qsstr('pr',tb) )>1E-7];
-
-BACKTEST('qtot(tb) =/= Sum(i,Q_REALISED(i,tb))')$(backtesting_hydraulics=1) = 1$(not sum(tb$(tf(tb)),abs(qtot.l(tb) - sum(i,Q_REALISED(i,tb))))<1E-7   );
-BACKTEST(' QTOT =/= 1000*p/0.22/3600')$(not %NON_LINEAR_EFF%) = (smax(tb$(tf(tb)),abs( qtot.l(tb)-1000*p.l(tb)/%EFF_TURB%/3600))>1E-7)$(smax(tb$(tf(tb)),abs( qtot.l(tb)-1000*p.l(tb)/%EFF_TURB%/3600))>1E-7) ;
-BACKTEST(' QTOT =/= 1000*p/0.22/3600')$(%NON_LINEAR_EFF%) =smax(tb, min(qtot.l(tb) -(0.964506173*p.l(tb) + 5.787037037 - Qtot_max*(1-u.l(tb))),
-                                                                        qtot.l(tb) -( 1.467061149*p.l(tb) - 3.258952534 ) ,
-                                                                        qtot.l(tb) -( 1.660878863*p.l(tb) - 7.910577679) ,
-                                                                        qtot.l(tb) -( 1.958733425*p.l(tb) - 18.03763277)))  <1E-7;
-
-
-BACKTEST(' WB BALANCE BROKEN GR ') = [smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('gr',tb))/scaling_volumes]$[ smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('gr',tb))> 1E-7];
-BACKTEST(' WB BALANCE BROKEN PR ') = [smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('pr',tb))/scaling_volumes]$[ smax(tb$(ord(tb)<card(tb) and tf(tb)),water_imbal('pr',tb))> 1E-7];
-BACKTEST(' SLACKS VOL GR ') = [smax(tb$(tf(tb)), slack_Vmin.l('gr',tb)+ slack_Vmax.l('gr',tb))]$(smax(tb$(tf(tb)), slack_Vmin.l('gr',tb)+ slack_Vmax.l('gr',tb)) >1E-7);
-BACKTEST(' SLACKS VOL PR ') = [smax(tb$(tf(tb)), slack_Vmin.l('pr',tb)+ slack_Vmax.l('pr',tb))]$(smax(tb$(tf(tb)), slack_Vmin.l('pr',tb)+ slack_Vmax.l('pr',tb))>1E-7);
-BACKTEST(' SLACKS WB GR ') = [smax(tb$(tf(tb)),  slack_wb_pos.l('gr',tb) + slack_wb_neg.l('pr',tb))]$(smax(tb$(tf(tb)),  slack_wb_pos.l('gr',tb) + slack_wb_neg.l('pr',tb))>1E-7);
-BACKTEST(' SLACKS WB PR ') = [smax(tb$(tf(tb)),  slack_wb_pos.l('pr',tb) + slack_wb_neg.l('pr',tb))]$(smax(tb$(tf(tb)),  slack_wb_pos.l('pr',tb) + slack_wb_neg.l('pr',tb))>1E-7);
-
-
-BACKTEST('SPILL_GR') = [sum(tb$(tf(tb)), spill.l('gr',tb))]$(sum(tb$(tf(tb)), spill.l('gr',tb))>1E-7);
-BACKTEST('SPILL_PR') = [sum(tb$(tf(tb)), spill.l('pr',tb))]$(sum(tb$(tf(tb)), spill.l('pr',tb))>1E-7);
-BACKTEST('ZGR average error')$(backtesting_hydraulics=1) = sum(tb$(tf(tb)), z.l('gr',tb)-Z_REALISED('gr',tb)  )/sum(tb$(tf(tb)),1);
-BACKTEST('ZPR average error')$(backtesting_hydraulics=1) = sum(tb$(tf(tb)), z.l('pr',tb)-Z_REALISED('pr',tb) )/sum(tb$(tf(tb)),1);
-BACKTEST('ZGR max abs error')$(backtesting_hydraulics=1) =    smax(tb$(tf(tb)), abs( z.l('gr',tb)-Z_REALISED('gr',tb)  ));
-BACKTEST('ZPR max abs error')$(backtesting_hydraulics=1) =    smax(tb$(tf(tb)), abs(   z.l('pr',tb)-Z_REALISED('pr',tb) ));
-BACKTEST('ZGR error approx bathy for 24 hours (cm)') = smax(tb$(tf(tb) and DAILY(tb)),abs(z.l('gr',tb) - [report(tb,'zgr_norm RECALC')/10+686.28]))*100  ;
-BACKTEST('ZPR error approx bathy for 24 hours (cm)') = smax(tb$(tf(tb) and DAILY(tb)),abs(z.l('pr',tb) - [report(tb,'zpr_norm RECALC')/10+684.7 ]))*100 ;
-BACKTEST('vGR error approx bathy (scaled m³)') = BACKTEST('ZGR error approx bathy for 24 hours (cm)')/100*1/2.5*1E6/scaling_volumes  ;
-BACKTEST('vPR error approx bathy (scaled m³)') = BACKTEST('ZPR error approx bathy for 24 hours (cm)')/100*1/2.5*1E5/scaling_volumes ;
-
-
-PARAMETER KPI(optimizer,*);
-KPI('hydro_team','PNL 24h') = sum(tb$(DAILY(tb)),spot(tb)*P_REALISED(tb));
-KPI('COOPT','PNL 24h') = sum(tb$(DAILY(tb)),spot(tb)*p.l(tb));
-KPI('hydro_team','PNL/M³ 24h') = KPI('hydro_team','PNL 24h') / sum(tb$(DAILY(tb)),3600*sum(i,Q_REALISED(i,tb)));
-KPI('COOPT','PNL/M³ 24h') = KPI('COOPT','PNL 24h') / sum(tb$(DAILY(tb)),3600*qtot.l(tb));
+$batinclude "%GAMS_SRC_PATH%\post_treatment.gms"
 
 
 ****** Write the results in GDXs files **************************************
-
 execute_unload '%OUT_PATH%' report BACKTEST tb tf  KPI cum_pnl
 execute_unload '%ALL_OUT_PATH%'
 execute 'gdxxrw.exe input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
-******* Write the log file *****************************************
-File log "this is the command that saves the log file" /'%OUT_DIR%\COOPT.log'/;
-******* Write the csv output files  *****************************************
-*File power_schedule /"%OUT_DIR%\power_schedule.csv"/;
-*File vane_schedule  /"%OUT_DIR%\vane_schedule.csv"/;
-*put power_schedule;
-*put ',p(tb)' /;
-*loop(tb, put tb.te(tb),',',report(tb,'p(t)'):</);
-*put vane_schedule;
-*put ',vane_closed(tb)' /;
-*loop(tb, put tb.te(tb),',',report(tb,'Vane CLOSED'):</);
+
+
+
+
+
 
 
 

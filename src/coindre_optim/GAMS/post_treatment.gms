@@ -210,21 +210,6 @@ KPI('hydro_team','PNL/MÂ³ 24h') = KPI('hydro_team','PNL 24h') / sum(tb$(DAILY(
 KPI('COOPT','PNL/MÂ³ 24h') = KPI('COOPT','PNL 24h') / sum(tb$(DAILY(tb)),3600*qtot.l(tb));
 
 
-****** Write the results in GDXs files **************************************
-
-execute_unload '%OUT_PATH%' report BACKTEST tb tf  KPI cum_pnl
-execute_unload '%ALL_OUT_PATH%'
-execute 'gdxxrw.exe input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
-******* Write the log file *****************************************
-******* Write the csv output files  *****************************************
-*File power_schedule /"%OUT_DIR%\power_schedule.csv"/;
-*File vane_schedule  /"%OUT_DIR%\vane_schedule.csv"/;
-*put power_schedule;
-*put ',p(tb)' /;
-*loop(tb, put tb.te(tb),',',report(tb,'p(t)'):</);
-*put vane_schedule;
-*put ',vane_closed(tb)' /;
-*loop(tb, put tb.te(tb),',',report(tb,'Vane CLOSED'):</);
 
 
 
