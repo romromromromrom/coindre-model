@@ -2,6 +2,7 @@
 import os
 import datetime as dt
 import shutil
+import logging
 
 # Third party library
 import yaml
@@ -11,13 +12,14 @@ import coindre_optim.prepare_csv_input as prep_csv
 import coindre_optim.post_results as pr
 from . import default_config_path
 
+logger = logging.getLogger(__name__)
+
 
 class Runner:
     def __init__(self, config_path=default_config_path):
         # opening the yaml file to write the configuration as model_instance attribute
         with open(config_path) as file:
-            Loaded_file = yaml.load(file, Loader=yaml.FullLoader)
-        self._config = Loaded_file
+            self._config = yaml.load(file, Loader=yaml.FullLoader)
         # relative paths and directories of interest in the project
         self._PY_SRC_PATH = os.path.dirname(os.path.realpath(__file__))
         self._GAMS_SRC_PATH = os.path.join(self._PY_SRC_PATH, "GAMS")
@@ -32,11 +34,11 @@ class Runner:
 
     def _create_workspace(self):
         # create the working directory and associated input gdx and output directories
-        print("* Creating working directories and xlsx template")
+        logger.info("* Creating working directories and xlsx template")
         for p in [self._GDX_DIR, self._CSV_INPUT_DIR, self._OUT_DIR]:
             if not os.path.exists(p):
                 os.makedirs(p)
-        print("* Copying excel template to working directory")
+        logger.info("* Copying excel template to working directory")
         # check if there is a run_results.xslx template to write in and copy-paste one from the source directory if necessary
         if not os.path.exists(
             os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")
@@ -64,7 +66,7 @@ class Runner:
                 f'--GDX_DIR="{self._GDX_DIR}"',
             ]
         )
-        print("running command line:    ", cli_csv2gdx)
+        logger.info("running command line:    ", cli_csv2gdx)
         os.system(cli_csv2gdx)
 
     def _import_from_hdx(self, s_date, e_date):
@@ -77,14 +79,15 @@ class Runner:
         )
 
     def _post_parameters(self):
-        if self._config["POST_TO_HDX"] == True:
+        if self._config["POST_TO_HDX"]:
             try:
                 pr.post_results_to_hdx(
                     WORKING_DIR=self._config["WORKING_DIR"],
                     PERSONAL_API_KEY=self._config["HDX"]["PERSONAL_API_KEY"],
                 )
-            except:
-                print("A problem occured during the post in Hydrolix")
+            except Exception as ex:
+                logger.exception(ex)
+                logger.error("A problem occured during the post in Hydrolix")
 
     def _get_gams_run_options(self):
         cli_run_daily_model = " ".join(
@@ -110,25 +113,28 @@ class Runner:
 
     def _run_daily(self):
         cli_run_daily_model = self._get_gams_run_options()
-        print("Launching model with command line:")
-        print(cli_run_daily_model)
+        logger.info("Launching model with command line:")
+        logger.info(cli_run_daily_model)
         os.system(cli_run_daily_model)
-        print(f"Run results stored at {self._config['WORKING_DIR']}")
+        logger.info(f"Run results stored at {self._config['WORKING_DIR']}")
 
     def launch(self, start=None, post=False):
-        start = (start or dt.datetime.now()).replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
-        end = start + dt.timedelta(days=self._config["HDX"]["NUMBER_OF_DAYS"])
-        print(
-            f'* Production plan is equal to the nominated/realised up to H{self._config["GAMS"]["LOCK_PRODUCTION_PLAN"]} included'
-        )
-        print(f"* Python job started at {dt.datetime.now()}")
-        print(f"* Run Start date :  {start}")
-        print(f"* Run End date   :  {end}")
-        self._create_workspace()
-        self._import_from_hdx(start, end)
-        self._convert_to_gdx()
-        self._run_daily()
-        if post == True:
-            self._post_parameters()
+        try:
+            start = (start or dt.datetime.now()).replace(
+                hour=0, minute=0, second=0, microsecond=0
+            )
+            end = start + dt.timedelta(days=self._config["HDX"]["NUMBER_OF_DAYS"])
+            logger.info(
+                f'* Production plan is equal to the nominated/realised up to H{self._config["GAMS"]["LOCK_PRODUCTION_PLAN"]} included'
+            )
+            logger.info(f"* Python job started at {dt.datetime.now()}")
+            logger.info(f"* Run Start date :  {start}")
+            logger.info(f"* Run End date   :  {end}")
+            self._create_workspace()
+            self._import_from_hdx(start, end)
+            self._convert_to_gdx()
+            self._run_daily()
+            if post:
+                self._post_parameters()
+        except Exception as ex:
+            logger.exception(ex)
