@@ -1,5 +1,3 @@
-import sys
-sys.path.append(r"C:\Users\WH5939\Documents\coindre-model\src\coindre_optim")
 import coindre_optim.runner as runner
 
 if __name__ == "__main__":
