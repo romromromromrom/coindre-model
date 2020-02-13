@@ -1,13 +1,10 @@
-# python standard library
 import os
 import datetime as dt
 import shutil
 import logging
 
-# Third party library
 import yaml
 
-# Application specific
 import coindre_optim.prepare_csv_input as prep_csv
 import coindre_optim.post_results as pr
 from . import default_config_path
@@ -82,12 +79,13 @@ class Runner:
         if self._config["POST_TO_HDX"]:
             try:
                 pr.post_results_to_hdx(
-                    WORKING_DIR=self._config["WORKING_DIR"],
-                    PERSONAL_API_KEY=self._config["HDX"]["PERSONAL_API_KEY"],
+                    working_dir=self._config["WORKING_DIR"],
+                    hx_api_key=self._config["HDX"]["PERSONAL_API_KEY"],
+                    scenario=self._config["HDX"]["SCENARIO"],
                 )
             except Exception as ex:
                 logger.exception(ex)
-                logger.error("A problem occured during the post in Hydrolix")
+                logger.error("A problem occurred during the post in Hydrolix")
 
     def _get_gams_run_options(self):
         cli_run_daily_model = " ".join(

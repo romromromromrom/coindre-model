@@ -1,9 +1,9 @@
----
 WORKING_DIR: C:\Users\WH5939\Documents\runs_gams
-POST_TO_HDX: True
+POST_TO_HDX: False
 
 HDX:
-  PERSONAL_API_KEY: 5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj
+  PERSONAL_API_KEY: xxxxxx
+  SCENARIO: coindre_model
   NUMBER_OF_DAYS: 14
 GAMS:
   GAMS_PATH: C:\Gams\win64\28.1\gams.exe
@@ -17,5 +17,3 @@ GAMS:
   MIP_GAP: 0.01
   RUN_NUM: 0
   RUN_TIME_LIMIT: 2000
-
-

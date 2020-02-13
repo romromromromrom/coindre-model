@@ -1,14 +1,15 @@
-# Python Standard Library
 import os
-
-# Third Party Library
 import datetime as dt
+import logging
+
 import numpy as np
 import pandas as pd
+
 from . import pi_simple_client as psc
 from . import hydrolix_client as hx, TZ
 
-#############################################
+
+logger = logging.getLogger(__name__)
 
 
 def write_model_csv_inputs(
