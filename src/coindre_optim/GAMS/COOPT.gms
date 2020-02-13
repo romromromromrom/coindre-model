@@ -5,15 +5,15 @@
 *###############################################################################################
 $setglobal XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
 $setglobal GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
-$setglobal GAMS_POST_TREATMENT_PATH
+$setglobal GAMS_POST_TREATMENT_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\post_treatment.gms'
 $setglobal GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
 $setglobal IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
 $setglobal OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
 $setglobal OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\output.gdx'
 $setglobal ALL_OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\all_output.gdx'
-$setglobal PZ_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
-$setglobal BATHY_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
-$setglobal ADDUCTION_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
+$setglobal PZ_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
+$setglobal BATHY_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
+$setglobal ADDUCTION_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
 * Default options in gams
 $setglobal OUT_NAME output_COOPT
 $setglobal MIP_GAP 0.001
@@ -90,7 +90,7 @@ case     'the different flow cases "Without transfer" , "Grande-Rhue to Petite-R
 **  OPTIONS FOR THE SOLVE STATEMENT **
 set refine_transfer(tb);
 sets first_order(tb),second_order(tb);
-sets additive(tb),addi_refined(tb)'addi_refined used 2segs on GR and 4 segs in PR',ours_bat(tb)'replicates bathy of shemWa exactly';
+sets additive(tb),addi_refined(tb)'addi_refined used 2segs on GR and 4 segs in PR';
 ** sets FOR THE DIFFERENT GRANULARITIES
 set DAILY(tb) 'This is a filter for the first 24 TBs';
 set THREE_DAILY(tb) 'This is a filter for the first 72 TBs';
@@ -113,15 +113,12 @@ parameter
           unavail(tb)
           P_REALISED(tb)
           VANE_REALISED(tb)
-          Z_REALISED(i,tb)
-          DZ_REALISED(tb)
-          Q_REALISED(i,tb)
           V_REALISED(i,tb)
 ;
 
 * read the gdx input for gams
 $gdxin %IMPORT_GDX_PATH%
-$load tb spot unavail inflows_pr inflows_gr P_REALISED VANE_REALISED Z_REALISED DZ_REALISED Q_REALISED V_REALISED
+$load tb spot unavail inflows_pr inflows_gr P_REALISED VANE_REALISED V_REALISED
 
 parameter Itot(tb),INFLOW(i,tb);
 inflows_pr(tb) = inflows_factor_PR*inflows_pr(tb);
@@ -236,10 +233,8 @@ Pmin$(backtesting_hydraulics=1) = -5;
 pSUP.up(tb) = Pmax;   pSUP.lo(tb) = 0;
 pINF.up(tb) = Pmax;   pINF.lo(tb) = 0;
 p.up(tb)    = Pmax;   p.lo(tb)    = 0;
-****** sometimes the flow rates are negative because of numerical imprecisions ********
-p.fx(tb)$(backtesting_hydraulics=1) = max(sum(i,Q_REALISED(i,tb))*%EFF_TURB%*3600/1000,0);
-vane_closed.fx(tb)$(backtesting_hydraulics=1) = [1]$[VANE_REALISED(tb)<1];
 
+****** sometimes the flow rates are negative because of numerical imprecisions ********
 Scalars Vmax_gr 'water level corresponding 692.0 mNGF' /1593000/
         Vmin_gr /0/
         Vmax_pr 'water level corresponding 693.0 mNGF'/264000/
@@ -273,11 +268,6 @@ scalars DZ_MAX  /7/
 ;
 dz.up(tb) = DZ_MAX;
 dz.lo(tb) = DZ_MIN;
-
-z.fx('gr',tb)$(ord(tb)=floor(pct_start*card(tb)) and volume_IC=0) = Z_REALISED('gr',tb);
-z.fx('pr',tb)$(ord(tb)=floor(pct_start*card(tb)) and volume_IC=0) = Z_REALISED('pr',tb);
-v.fx('gr',tb)$(ord(tb)=1+0*floor(pct_start*card(tb)) and volume_IC=1) = V_REALISED('gr',tb);
-v.fx('pr',tb)$(ord(tb)=1+0*floor(pct_start*card(tb)) and volume_IC=1) = V_REALISED('pr',tb);
 
 slack_Vmax.fx('gr',tb)$(activate_slacks=0) = 0 ;
 slack_Vmin.fx('gr',tb)$(activate_slacks=0) = 0 ;
