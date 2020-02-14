@@ -623,7 +623,7 @@ $batinclude "%GAMS_POST_TREATMENT_PATH%"
 ****** Write the results in GDXs files **************************************
 execute_unload '%OUT_PATH%' report BACKTEST tb tf  KPI cum_pnl
 execute_unload '%ALL_OUT_PATH%'
-execute 'gdxxrw.exe input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
+execute 'gdxxrw input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
 
 
 
