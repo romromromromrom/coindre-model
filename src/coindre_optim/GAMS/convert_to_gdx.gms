@@ -14,8 +14,8 @@ PARAMETERS
 ;
 
 $setglobal s %system.dirSep%
-$setGlobal CSV_INPUT_DIR C:%s%Users%s%WH5939%s%Documents%s%coindre-model%s%src%s%coindre_optim%s%csv_input_test
-$setGlobal GDX_DIR C:%s%Users%s%WH5939%s%Documents%s%coindre-model%s%src%s%coindre_optim%s%csv_input_test
+$setGlobal CSV_INPUT_DIR
+$setGlobal GDX_DIR
 $setGlobal import_opts "useHeader=y index=1 ColCount=2 value=2 storeZero=y"
 
 

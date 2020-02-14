@@ -95,16 +95,8 @@ class Runner:
                 self._get_gams_run_config(),
                 f'--GDX_DIR="{self._GDX_DIR}"',
                 f'--CURRENT_TIME="{dt.datetime.now().hour}"',
-                f'--IMPORT_GDX_PATH="{os.path.realpath(os.path.join(self._GDX_DIR, "import_coopt.gdx"))}"',
-                f'--OUT_DIR="{self._OUT_DIR}"',
-                f'--OUT_PATH="{os.path.join(self._OUT_DIR, "output.gdx")}"',
-                f'--ALL_OUT_PATH="{os.path.join(self._OUT_DIR, "all_output.gdx")}"',
+                f'--WORKING_DIR="{os.path.join(self._config["WORKING_DIR"])}"',
                 f'--GAMS_SRC_PATH="{self._GAMS_SRC_PATH}"',
-                f'--GAMS_POST_TREATMENT_PATH="{os.path.join(self._GAMS_SRC_PATH,"post_treatment.gms")}"',
-                f'--PZ_PATH="{os.path.join(self._GAMS_SRC_PATH, "power_zones.gdx")}"',
-                f'--BATHY_PATH="{os.path.join(self._GAMS_SRC_PATH, "bathymetry.gdx")}"',
-                f'--ADDUCTION_PATH={os.path.join(self._GAMS_SRC_PATH, "adduction_planes.gdx")}',
-                f'--XLS_OUTPUT="{os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")}"',
             ]
         )
         return cli_run_daily_model

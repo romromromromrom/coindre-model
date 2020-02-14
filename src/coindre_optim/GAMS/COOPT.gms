@@ -3,17 +3,32 @@
 *################                 COindre OPTimisation tool                   ##################
 *################                                                             ##################
 *###############################################################################################
-$setglobal XLS_OUTPUT 'C:\Users\WH5939\Documents\runs_gams\run_results.xlsx'
-$setglobal GAMS_SRC_PATH 'C:\Users\WH5939\Documents\gamsdir\projdir\Coindre modelling\Versions\coindre-model\src\coindre_optim\GAMS'
-$setglobal GAMS_POST_TREATMENT_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\post_treatment.gms'
-$setglobal GDX_DIR 'C:\Users\WH5939\Documents\runs_gams\gdx_files'
-$setglobal IMPORT_GDX_PATH 'C:\Users\WH5939\Documents\runs_gams\gdx_files\import_coopt.gdx'
-$setglobal OUT_DIR 'C:\Users\WH5939\Documents\runs_gams\output'
-$setglobal OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\output.gdx'
-$setglobal ALL_OUT_PATH 'C:\Users\WH5939\Documents\runs_gams\output\all_output.gdx'
-$setglobal PZ_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\power_zones.gdx'
-$setglobal BATHY_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\bathymetry.gdx'
-$setglobal ADDUCTION_PATH 'C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\GAMS\adduction_planes.gdx'
+* Variables defined by the python command line
+$setglobal s %system.dirSep%
+$setglobal WORKING_DIR
+$setglobal GAMS_SRC_PATH
+$setglobal CURRENT_TIME
+$setglobal WARM_UP
+$setglobal REFINED_HYDRAULICS
+$setglobal FILTER_UC_SCHEDULE
+$setglobal LOCK_PRODUCTION_PLAN
+$setglobal RUN_ID
+
+
+* Paths from the working directory
+$setglobal XLS_OUTPUT "%WORKING_DIR%%s%run_results.xlsx"
+$setglobal GDX_DIR "%WORKING_DIR%%s%gdx_files"
+$setglobal IMPORT_GDX_PATH "%GDX_DIR%%s%import_coopt.gdx"
+$setglobal OUT_DIR "%WORKING_DIR%%s%output"
+$setglobal OUT_PATH "%OUT_DIR%%s%output_%RUN_ID%.gdx"
+$setglobal ALL_OUT_PATH "%OUT_DIR%%s%all_output_%RUN_ID%.gdx"
+
+* Paths from the source directory
+$setglobal GAMS_POST_TREATMENT_PATH "%GAMS_SRC_PATH%%s%post_treatment.gms"
+$setglobal PZ_PATH "%GAMS_SRC_PATH%%s%power_zones.gdx"
+$setglobal BATHY_PATH "%GAMS_SRC_PATH%%s%bathymetry.gdx"
+$setglobal ADDUCTION_PATH "%GAMS_SRC_PATH%%s%adduction_planes.gdx"
+
 * Default options in gams
 $setglobal OUT_NAME output_COOPT
 $setglobal MIP_GAP 0.001
@@ -21,28 +36,17 @@ $setglobal RUN_TIME_LIMIT 2000
 $setglobal NO_TB_FILTER 1
 $setglobal ENABLE_RESERVED_FLOW_RATE 1
 $setglobal N_DAYS 2
-$setglobal CURRENT_TIME 16
-$setglobal WARM_UP 1
-$setglobal REFINED_HYDRAULICS 1
-$setglobal FILTER_UC_SCHEDULE 1
-$setglobal LOCK_PRODUCTION_PLAN 24
 $setglobal NON_LINEAR_EFF 1
 $setglobal ACTI_SLACKS 1
 $setglobal ACTI_WB_SLACKS 0
 $setglobal ALLO_SPILL 1
 $setglobal DZ_COMP_SSTR 1
 $setglobal CORR_FLO 0.3
-$setglobal QTOT_THRESH_SSTR 15
 $setglobal QTOT_THRESH_TRANS 10
 $setglobal delta_V 2
 $setglobal PCT_START 0
 $setglobal PCT_END 1
 $setglobal VOLUME_INIT_CONDITIONS 1
-$setglobal V_INI_GR  1500000
-$setglobal V_INI_PR  250000
-$setglobal RUN_NUM 2
-$setglobal INFLOWS_FACT_GR 1
-$setglobal INFLOWS_FACT_PR 1
 $setglobal EFF_TURB 0.22
 
 *---- options for simulation
@@ -51,8 +55,6 @@ scalar activate_slacks 'if =1 the Volume slacks are allowed to be used for this 
 scalar activate_wb_slacks 'if = 1 the water balance slacks will be used' /%ACTI_WB_SLACKS%/;
 scalar allow_spilling /%ALLO_SPILL%/;
 * General hydraulics
-scalar inflows_factor_PR 'impacts the inflows' /%INFLOWS_FACT_GR%/;
-scalar inflows_factor_GR 'impacts the inflows' /%INFLOWS_FACT_PR%/;
 scalar tol_vol 'minimal volume in pr and GR is raised by tol_vol and the change of power volumes are raised by this value too in order to have a plan that complies with the OURS, unit is in [scaling_volume*m³]' /%delta_V%/
 * Start-Up and Shut-Down
 scalar spill_costs 'in euros per m^3' /1/;
@@ -64,7 +66,6 @@ scalar activate_su_vane 'include SU and SD costs for the vane in the objective f
 scalar qtot_lim_transfer /%QTOT_THRESH_TRANS%/;
 scalar dz_corr_sstr 'allows correction in dz of qsstr' /%DZ_COMP_SSTR%/;
 scalar corr_flow 'qsstr =(approx.)= (1/3 or 2/3)*Qtot + dz*corr_flow if qtot>q_lim_corr_sstr'/%CORR_FLO%/;
-scalar q_lim_corr_sstr 'for qtot<q_lim_corr_sstr there is no correction of qsstr' /%QTOT_THRESH_SSTR%/;
 * Time horizon definition
 scalar no_tf_filter /%NO_TB_FILTER%/;
 scalar pct_start 'the model will start solving for ord(tb)>=pct_start*card(tb)'  ;  pct_start = %PCT_START% ;
@@ -121,8 +122,6 @@ $gdxin %IMPORT_GDX_PATH%
 $load tb spot unavail inflows_pr inflows_gr P_REALISED VANE_REALISED V_REALISED
 
 parameter Itot(tb),INFLOW(i,tb);
-inflows_pr(tb) = inflows_factor_PR*inflows_pr(tb);
-inflows_gr(tb) = inflows_factor_GR*inflows_gr(tb);
 INFLOW(i,tb)= (inflows_gr(tb))$(ord(i) = 1) + (inflows_pr(tb))$(ord(i) = 2);
 Itot(tb) = inflows_pr(tb) + inflows_gr(tb);
 

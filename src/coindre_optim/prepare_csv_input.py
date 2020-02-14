@@ -190,10 +190,4 @@ def write_model_csv_inputs(
 
 
 
-if __name__ == "__main__":
-    api_key = '5bpodg6vmy18lqtq949u4psgh0mb5lfxg0bz326jmpxnma3w8r7tntb9y4j1hzlj'
-    start = dt.datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
-    end = start + dt.timedelta(days=14)
-    write_model_csv_inputs(hx_api_key=api_key, start_date=start, end_date=end, csv_input_dir=r"C:\Users\WH5939\Documents\coindre-model\src\coindre_optim\csv_input_test")
-
 
