@@ -4,10 +4,13 @@ import shutil
 import logging
 
 import yaml
+import xlwings as xw
+import pandas as pd
 
 import coindre_optim.prepare_csv_input as prep_csv
 import coindre_optim.post_results as pr
 from . import default_config_path
+
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +31,27 @@ class Runner:
         self._GDX_DIR = os.path.join(self._config["WORKING_DIR"], "gdx_files")
         self._CSV_INPUT_DIR = os.path.join(self._config["WORKING_DIR"], "input")
         self._OUT_DIR = os.path.join(self._config["WORKING_DIR"], "output")
+        self._visu_filename = "run_results.xlsx"
+
+    def _write_visu_file(self):
+        df_raw = pd.read_csv(
+            filepath_or_buffer=os.path.join(self._config["WORKING_DIR"],
+                                            "raw_results.csv"),
+            header=None,
+            index_col=False
+        )
+        try:
+            wb = xw.Book(
+                os.path.join(self._config["WORKING_DIR"], self._visu_filename)
+            )
+            sht = wb.sheets['raw_results']
+            sht.range("A1:BM700").clear_contents()
+            sht.range('A1').value = df_raw.values
+            wb.save()
+        except Exception as ex:
+            logger.exception(ex)
+        finally:
+            wb.close()
 
     def _create_workspace(self):
         # create the working directory and associated input gdx and output directories
@@ -37,12 +61,13 @@ class Runner:
                 os.makedirs(p)
         logger.info("* Copying excel template to working directory")
         # check if there is a run_results.xslx template to write in and copy-paste one from the source directory if necessary
+        self._visu_filename = "run_results.xlsx"
         if not os.path.exists(
-            os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")
+            os.path.join(self._config["WORKING_DIR"], self._visu_filename)
         ):
             shutil.copyfile(
-                os.path.join(self._COINDRE_OPTIM_DIR, "run_results.xlsx"),
-                os.path.join(self._config["WORKING_DIR"], "run_results.xlsx"),
+                os.path.join(self._COINDRE_OPTIM_DIR, self._visu_filename),
+                os.path.join(self._config["WORKING_DIR"], self._visu_filename),
             )
 
     def _get_gams_run_config(self):
@@ -108,7 +133,7 @@ class Runner:
         os.system(cli_run_daily_model)
         logger.info(f"Run results stored at {self._config['WORKING_DIR']}")
 
-    def launch(self, start=None, post=False):
+    def launch(self, start=None):
         try:
             start = (start or dt.datetime.now()).replace(
                 hour=0, minute=0, second=0, microsecond=0
@@ -124,7 +149,13 @@ class Runner:
             self._import_from_hdx(start, end)
             self._convert_to_gdx()
             self._run_daily()
-            if post:
-                self._post_parameters()
+            self._post_parameters()
+            self._write_visu_file()
+
+
+
         except Exception as ex:
             logger.exception(ex)
+
+
+

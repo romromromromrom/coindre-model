@@ -15,6 +15,7 @@ $setglobal LOCK_PRODUCTION_PLAN
 $setglobal RUN_ID
 
 
+
 * Paths from the working directory
 $setglobal XLS_OUTPUT "%WORKING_DIR%%s%run_results.xlsx"
 $setglobal GDX_DIR "%WORKING_DIR%%s%gdx_files"
@@ -623,7 +624,7 @@ $batinclude "%GAMS_POST_TREATMENT_PATH%"
 ****** Write the results in GDXs files **************************************
 execute_unload '%OUT_PATH%' report BACKTEST tb tf  KPI cum_pnl
 execute_unload '%ALL_OUT_PATH%'
-execute 'gdxxrw.exe input="%OUT_PATH%" output="%XLS_OUTPUT%" par=report rng=raw_results!a1'
+execute 'gdxdump "%OUT_PATH%" output="%WORKING_DIR%%s%raw_results.csv" symb=report format=csv cDim=y'
 
 
 
