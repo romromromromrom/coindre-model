@@ -88,7 +88,7 @@ class Runner:
                 f'--GDX_DIR="{self._GDX_DIR}"',
             ]
         )
-        logger.info("running command line:    ", cli_csv2gdx)
+        logger.info("running command line: {cli_csv2gdx}")
         os.system(cli_csv2gdx)
 
     def _import_from_hdx(self, s_date, e_date):
