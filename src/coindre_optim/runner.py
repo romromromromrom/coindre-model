@@ -4,7 +4,6 @@ import shutil
 import logging
 
 import yaml
-import xlwings as xw
 import pandas as pd
 
 import coindre_optim.prepare_csv_input as prep_csv
@@ -34,6 +33,7 @@ class Runner:
         self._visu_filename = "run_results.xlsx"
 
     def _write_visu_file(self):
+        import xlwings as xw
         df_raw = pd.read_csv(
             filepath_or_buffer=os.path.join(self._config["WORKING_DIR"],
                                             "raw_results.csv"),
@@ -150,7 +150,8 @@ class Runner:
             self._convert_to_gdx()
             self._run_daily()
             self._post_parameters()
-            self._write_visu_file()
+            if self._config.get('WRITE_EXCEL_RESULTS', False):
+                self._write_visu_file()
 
 
 
