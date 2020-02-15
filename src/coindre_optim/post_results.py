@@ -21,7 +21,7 @@ def post_results_to_hdx(working_dir, hx_api_key, scenario):
         index_col=0
     )
 
-    df.replace("Eps", 0.0)
+    df.replace("Eps", 0.0).astype("float64")
 
     df.index = pd.to_datetime(df.index).tz_convert(TZ)
     power_schedule = df.loc[:, ["p(t)"]].rename(columns={"p(t)": "Value"})
