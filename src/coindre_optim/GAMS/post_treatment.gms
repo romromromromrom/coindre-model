@@ -9,8 +9,6 @@ ordmin =  1 + 1/100*card(tb)*0  ;
 ordmax =  1 + 1/100*card(tb)*100;
 window(tb) = yes$(ord(tb)>= ordmin and ord(tb)<=ordmax and tf(tb)) OR YES;
 
-parameter difference_z(i,tb);
-difference_z(i,tb)$(tf(tb)) = (10*(z.l(i,tb) - Z_REALISED(i,tb))-20)$(z.l(i,tb) - Z_REALISED(i,tb)) + EPS$((z.l(i,tb) - Z_REALISED(i,tb)));
 
 parameter report(tb,*);
 report(tb,'spot')$(window(tb)) = (spot(tb))$(spot(tb)<>0) + Eps$(not spot(tb)<>0);
@@ -19,31 +17,22 @@ report(tb,'inflows_PR')$(window(tb)) = (inflows_pr(tb))$(inflows_pr(tb)<>0) + Ep
 report(tb,'indispo (%)')$(window(tb)) = (100*unavail(tb))$(unavail(tb)<>0) + Eps$(not unavail(tb)<>0);
 
 report(tb,'p(t)')$(window(tb)) = (p.l(tb))$(p.l(tb)<>0) + Eps$(not p.l(tb)<>0);
-report(tb,'P_REALISED)')$(window(tb)) = (P_REALISED(tb))$(P_REALISED(tb)<>0) + Eps$(not P_REALISED(tb)<>0);
+report(tb,'P NOMINATED')$(window(tb)) = (P_REALISED(tb))$(P_REALISED(tb)<>0) + Eps$(not P_REALISED(tb)<>0);
 
 report(tb,'x19')$(window(tb)) = ((1-unavail(tb))*19*x.l("19MW",tb))$(x.l("19MW",tb)<>0) + Eps$(not x.l("19MW",tb)<>0);
 report(tb,'x25')$(window(tb)) = ((1-unavail(tb))*25*x.l("25MW",tb))$(x.l("25MW",tb)<>0) + Eps$(not x.l("25MW",tb)<>0);
 report(tb,'x34')$(window(tb)) = ((1-unavail(tb))*34*x.l("34MW",tb))$(x.l("34MW",tb)<>0) + Eps$(not x.l("34MW",tb)<>0);
 report(tb,'x36')$(window(tb)) = ((1-unavail(tb))*36*x.l("36MW",tb))$(x.l("36MW",tb)<>0) + Eps$(not x.l("36MW",tb)<>0);
 report(tb,'Vane CLOSED')$(window(tb)) = (10*vane_closed.l(tb))$(vane_closed.l(tb) <>0) + Eps$(not vane_closed.l(tb)<>0);
-report(tb,'VANE_REALISED')$(window(tb)) = (10*(1-VANE_REALISED(tb)))$((1-VANE_REALISED(tb)) <>0) + Eps$(not (1-VANE_REALISED(tb))<>0);
-
+report(tb,'Vane REALISED')$(window(tb)) = (10*VANE_REALISED(tb))$(VANE_REALISED(tb) <>0) + Eps$(not VANE_REALISED(tb)<>0);
 
 report(tb,'v_gr (1E+04 m³)')$(window(tb)) = (v.l('gr',tb)/scaling_volumes)$(v.l('gr',tb)/scaling_volumes<>0) + Eps$(not v.l('gr',tb)/scaling_volumes<>0);
 report(tb,'v_pr (1E+04 m³)')$(window(tb)) = (v.l('pr',tb)/scaling_volumes)$(v.l('pr',tb)/scaling_volumes<>0) + Eps$(not v.l('pr',tb)/scaling_volumes<>0);
-report(tb,'VPR_REALISED (1E+04 m³)')$(window(tb)) = (V_REALISED('pr',tb)/scaling_volumes)$(V_REALISED('pr',tb)<>0) + Eps$(V_REALISED('pr',tb)/scaling_volumes<>0);
-report(tb,'VGR_REALISED (1E+04 m³)')$(window(tb)) = (V_REALISED('gr',tb)/scaling_volumes)$(V_REALISED('gr',tb)<>0) + Eps$(V_REALISED('gr',tb)/scaling_volumes<>0);
 
-
-report(tb,' ZGR_REALISED -  686.28 (in dm)')$(window(tb))=((Z_REALISED('gr',tb)-686.28)*10)$((Z_REALISED('gr',tb)-686.28)*100<>0) + Eps$(not (Z_REALISED('gr',tb)-686.28)*100<>0)  ;
 report(tb,' z_gr  - 686.28 (in dm) ')$(window(tb)) =  ((z.l('gr',tb)-686.28)*10)$((z.l('gr',tb)-686.28)<>0) + Eps$(not z.l('gr',tb)- 686.28<>0)  ;
 report(tb,' seg1_bathy_gr ')$(window(tb)) = [seg1_bathy.l('gr',tb)*10 ]$[seg1_bathy.l('gr',tb)<>0] +EPS$[seg1_bathy.l('gr',tb)=0];
-report(tb,' ZPR_REALISED -  684.70 (in dm)')$(window(tb))=((Z_REALISED('pr',tb)-684.70)*10)$((Z_REALISED('pr',tb)-684.70)*10<>0) + Eps$(not (Z_REALISED('pr',tb)-684.70)*10<>0)  ;
 report(tb,' z_pr -  684.70 (in dm)')$(window(tb)) =  ((z.l('pr',tb)-684.70)*10)$((z.l('pr',tb)-684.70)*100<>0) + Eps$(not (z.l('pr',tb)-684.70)*10<>0)  ;
 report(tb,' seg1_bathy_pr ')$(window(tb)) = [seg1_bathy.l('pr',tb)*10 ]$[seg1_bathy.l('pr',tb)<>0] +EPS$[seg1_bathy.l('pr',tb)=0];
-report(tb,'diff zPR in dm')$(window(tb)) =  difference_z('pr',tb);
-report(tb,'diff zGR in dm')$(window(tb)) =  difference_z('gr',tb);
-
 
 report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=8000 and v.l('pr',tb)>=0)=10*(3.74999999999943E-05*v.l('pr',tb)+684.7-684.7);
 report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=28000 and v.l('pr',tb)>=8000)=10*(0.00005*v.l('pr',tb)+684.6-684.7);
@@ -57,7 +46,6 @@ report(tb,'zpr_norm RECALC')$(window(tb) and v.l('pr',tb)<=264000 and v.l('pr',t
 report(tb,'zpr_norm RECALC')=report(tb,'zpr_norm RECALC')/10 + 684.7;
 *report(tb,'zpr_norm RECALC')$(window(tb) and report(tb,'zpr_norm RECALC')=0)=EPS;
 
-
 report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=202000 and v.l('gr',tb)>=0)=10*(5.04950495049496E-06*v.l('gr',tb)+686.28-686.28);
 report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=435000 and v.l('gr',tb)>=202000)=10*(4.29184549356223E-06*v.l('gr',tb)+686.4330472103-686.28);
 report(tb,'zgr_norm RECALC')$(window(tb) and v.l('gr',tb)<=690000 and v.l('gr',tb)>=435000)=10*(3.92156862745098E-06*v.l('gr',tb)+686.594117647059-686.28);
@@ -68,9 +56,6 @@ report(tb,'zgr_norm RECALC')=report(tb,'zgr_norm RECALC')/10 + 686.28;
 *report(tb,'zgr_norm RECALC')$(window(tb) and report(tb,'zgr_norm RECALC')=0)=EPS;
 
 
-
-
-report(tb,'DZ_REALISED')$(window(tb)) = (DZ_REALISED(tb)*10)$(DZ_REALISED(tb)*100<>0) + Eps$(not DZ_REALISED(tb)*100 <>0)  ;
 report(tb,' dz (dm)')$(window(tb)) =  (dz.l(tb)*10)$(dz.l(tb)*10<>0) + Eps$(not dz.l(tb)*100 <>0)  ;
 report(tb,'v_max_GR (1E+04 m³)')$(window(tb)) =  Vmax_gr/scaling_volumes;
 report(tb,'v_max_PR (1E+04 m³)')$(window(tb)) =  Vmax_pr/scaling_volumes;
@@ -93,11 +78,8 @@ report(tb,'qsstr_gr m³/s')$(window(tb)) = (q_sstr.l('gr',tb))$(q_sstr.l('gr',tb
 
 report(tb,'q2 m³/s')$(window(tb)) = (q_sstr.l('pr',tb)-q1tr_avg.l(tb))$(q_sstr.l('pr',tb)-q1tr_avg.l(tb)<>0) + Eps$(not q_sstr.l('pr',tb)-q1tr_avg.l(tb)<>0);
 report(tb,'q1 m³/s')$(window(tb)) = (q_sstr.l('gr',tb)+q1tr_avg.l(tb))$(q_sstr.l('gr',tb)+q1tr_avg.l(tb)<>0) + Eps$(not q_sstr.l('gr',tb)+q1tr_avg.l(tb)<>0);
-report(tb,'QPR_REALISED')$(window(tb)) = (Q_REALISED('pr',tb))$(Q_REALISED('pr',tb)<>0) + Eps$(not Q_REALISED('pr',tb)<>0);
-report(tb,'QGR_REALISED')$(window(tb)) = (Q_REALISED('gr',tb))$(Q_REALISED('gr',tb)<>0) + Eps$(not Q_REALISED('gr',tb)<>0);
 report(tb,'QTOT m³/s')$(window(tb)) = (qtot.l(tb))$(qtot.l(tb) <>0) + EPS$(not qtot.l(tb) <> 0);
 report(tb,'QTOT>lim transfer ')$(window(tb)) = (qtot_lim_transfer *sign_qtot.l(tb))$(qtot_lim_transfer*sign_qtot.l(tb) <>0) + EPS$(not qtot_lim_transfer*sign_qtot.l(tb) <> 0);
-report(tb,'QTOT_REALISED')$(window(tb)) = (sum(i,Q_REALISED(i,tb)))$(sum(i,Q_REALISED(i,tb)) <>0) + EPS$(sum(i,Q_REALISED(i,tb)) = 0);
 report(tb,'qtot-1000p(t)/0.22/3600')$(window(tb)) = (qtot.l(tb)-1000*p.l(tb)/0.22/3600)$(qtot.l(tb)-1000*p.l(tb)/0.22/3600 <>0) + EPS$(not qtot.l(tb)-1000*p.l(tb)/0.22/3600 <> 0);
 
 report(tb,'q1_trans m³/s')$(window(tb)) = q1tr_avg.l(tb)$(q1tr_avg.l(tb) <>0)  + Eps$(q1tr_avg.l(tb)=0) ;
@@ -122,7 +104,6 @@ report(tb,'24H')$(window(tb)) = 160$(ord(tb)=first_time+24) + EPS$(not ord(tb)=f
 set optimizer /hydro_team,COOPT/;
 alias(tb,h);
 parameter cum_pnl(optimizer,tb);
-cum_pnl("hydro_team",tb)$(window(tb))= sum(h$(ord(h)<=ord(tb) and ord(h)>=first_time), P_REALISED(h)*spot(h) );
 cum_pnl("COOPT",tb)$(window(tb))=  sum(h$(ord(h)<=ord(tb) and ord(h)>=first_time), p.l(h)*spot(h) );
 cum_pnl(optimizer,tb)$(cum_pnl(optimizer,tb)=0)=EPS;
 
@@ -176,7 +157,7 @@ untightness_qsstr('gr',tb)$( vane_closed.l(tb)=0 and u.l(tb)=1) = q_sstr.l('gr',
 BACKTEST(' qsstr GR not @bound  ') =[smax(tb$(tf(tb)),untightness_qsstr('gr',tb) )]$[smax(tb$(tf(tb)),untightness_qsstr('gr',tb) )>1E-7];
 BACKTEST(' qsstr PR not @bound  ') =[smax(tb$(tf(tb)),untightness_qsstr('pr',tb) )]$[smax(tb$(tf(tb)),untightness_qsstr('pr',tb) )>1E-7];
 
-BACKTEST('qtot(tb) =/= Sum(i,Q_REALISED(i,tb))')$(backtesting_hydraulics=1) = 1$(not sum(tb$(tf(tb)),abs(qtot.l(tb) - sum(i,Q_REALISED(i,tb))))<1E-7   );
+
 BACKTEST(' QTOT =/= 1000*p/0.22/3600')$(not %NON_LINEAR_EFF%) = (smax(tb$(tf(tb)),abs( qtot.l(tb)-1000*p.l(tb)/%EFF_TURB%/3600))>1E-7)$(smax(tb$(tf(tb)),abs( qtot.l(tb)-1000*p.l(tb)/%EFF_TURB%/3600))>1E-7) ;
 BACKTEST(' QTOT =/= 1000*p/0.22/3600')$(%NON_LINEAR_EFF%) =smax(tb, min(qtot.l(tb) -(0.964506173*p.l(tb) + 5.787037037 - Qtot_max*(1-u.l(tb))),
                                                                         qtot.l(tb) -( 1.467061149*p.l(tb) - 3.258952534 ) ,
@@ -194,19 +175,16 @@ BACKTEST(' SLACKS WB PR ') = [smax(tb$(tf(tb)),  slack_wb_pos.l('pr',tb) + slack
 
 BACKTEST('SPILL_GR') = [sum(tb$(tf(tb)), spill.l('gr',tb))]$(sum(tb$(tf(tb)), spill.l('gr',tb))>1E-7);
 BACKTEST('SPILL_PR') = [sum(tb$(tf(tb)), spill.l('pr',tb))]$(sum(tb$(tf(tb)), spill.l('pr',tb))>1E-7);
-BACKTEST('ZGR average error')$(backtesting_hydraulics=1) = sum(tb$(tf(tb)), z.l('gr',tb)-Z_REALISED('gr',tb)  )/sum(tb$(tf(tb)),1);
-BACKTEST('ZPR average error')$(backtesting_hydraulics=1) = sum(tb$(tf(tb)), z.l('pr',tb)-Z_REALISED('pr',tb) )/sum(tb$(tf(tb)),1);
-BACKTEST('ZGR max abs error')$(backtesting_hydraulics=1) =    smax(tb$(tf(tb)), abs( z.l('gr',tb)-Z_REALISED('gr',tb)  ));
-BACKTEST('ZPR max abs error')$(backtesting_hydraulics=1) =    smax(tb$(tf(tb)), abs(   z.l('pr',tb)-Z_REALISED('pr',tb) ));
+
 BACKTEST('ZGR error approx bathy for 24 hours (cm)') = smax(tb$(tf(tb) and DAILY(tb)),abs(z.l('gr',tb) - [report(tb,'zgr_norm RECALC')/10+686.28]))*100  ;
 BACKTEST('ZPR error approx bathy for 24 hours (cm)') = smax(tb$(tf(tb) and DAILY(tb)),abs(z.l('pr',tb) - [report(tb,'zpr_norm RECALC')/10+684.7 ]))*100 ;
 BACKTEST('vGR error approx bathy (scaled mÂ³)') = BACKTEST('ZGR error approx bathy for 24 hours (cm)')/100*1/2.5*1E6/scaling_volumes  ;
 BACKTEST('vPR error approx bathy (scaled mÂ³)') = BACKTEST('ZPR error approx bathy for 24 hours (cm)')/100*1/2.5*1E5/scaling_volumes ;
 
 parameter KPI(optimizer,*);
-KPI('hydro_team','PNL 24h') = sum(tb$(DAILY(tb)),spot(tb)*P_REALISED(tb));
+
 KPI('COOPT','PNL 24h') = sum(tb$(DAILY(tb)),spot(tb)*p.l(tb));
-KPI('hydro_team','PNL/MÂ³ 24h') = KPI('hydro_team','PNL 24h') / sum(tb$(DAILY(tb)),3600*sum(i,Q_REALISED(i,tb)));
+
 KPI('COOPT','PNL/MÂ³ 24h') = KPI('COOPT','PNL 24h') / sum(tb$(DAILY(tb)),3600*qtot.l(tb));
 
 

@@ -1,16 +1,15 @@
-# python standard library
 import os
 import datetime as dt
 import shutil
 import logging
 
-# Third party library
 import yaml
+import pandas as pd
 
-# Application specific
 import coindre_optim.prepare_csv_input as prep_csv
 import coindre_optim.post_results as pr
 from . import default_config_path
+
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +30,28 @@ class Runner:
         self._GDX_DIR = os.path.join(self._config["WORKING_DIR"], "gdx_files")
         self._CSV_INPUT_DIR = os.path.join(self._config["WORKING_DIR"], "input")
         self._OUT_DIR = os.path.join(self._config["WORKING_DIR"], "output")
+        self._visu_filename = "run_results.xlsx"
+
+    def _write_visu_file(self):
+        import xlwings as xw
+        df_raw = pd.read_csv(
+            filepath_or_buffer=os.path.join(self._config["WORKING_DIR"],
+                                            "raw_results.csv"),
+            header=None,
+            index_col=False
+        )
+        try:
+            wb = xw.Book(
+                os.path.join(self._config["WORKING_DIR"], self._visu_filename)
+            )
+            sht = wb.sheets['raw_results']
+            sht.range("A1:BM700").clear_contents()
+            sht.range('A1').value = df_raw.values
+            wb.save()
+        except Exception as ex:
+            logger.exception(ex)
+        finally:
+            wb.close()
 
     def _create_workspace(self):
         # create the working directory and associated input gdx and output directories
@@ -40,12 +61,13 @@ class Runner:
                 os.makedirs(p)
         logger.info("* Copying excel template to working directory")
         # check if there is a run_results.xslx template to write in and copy-paste one from the source directory if necessary
+        self._visu_filename = "run_results.xlsx"
         if not os.path.exists(
-            os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")
+            os.path.join(self._config["WORKING_DIR"], self._visu_filename)
         ):
             shutil.copyfile(
-                os.path.join(self._COINDRE_OPTIM_DIR, "run_results.xlsx"),
-                os.path.join(self._config["WORKING_DIR"], "run_results.xlsx"),
+                os.path.join(self._COINDRE_OPTIM_DIR, self._visu_filename),
+                os.path.join(self._config["WORKING_DIR"], self._visu_filename),
             )
 
     def _get_gams_run_config(self):
@@ -66,7 +88,7 @@ class Runner:
                 f'--GDX_DIR="{self._GDX_DIR}"',
             ]
         )
-        logger.info("running command line:    ", cli_csv2gdx)
+        logger.info("running command line: {cli_csv2gdx}")
         os.system(cli_csv2gdx)
 
     def _import_from_hdx(self, s_date, e_date):
@@ -82,12 +104,13 @@ class Runner:
         if self._config["POST_TO_HDX"]:
             try:
                 pr.post_results_to_hdx(
-                    WORKING_DIR=self._config["WORKING_DIR"],
-                    PERSONAL_API_KEY=self._config["HDX"]["PERSONAL_API_KEY"],
+                    working_dir=self._config["WORKING_DIR"],
+                    hx_api_key=self._config["HDX"]["PERSONAL_API_KEY"],
+                    scenario=self._config["HDX"]["SCENARIO"],
                 )
             except Exception as ex:
                 logger.exception(ex)
-                logger.error("A problem occured during the post in Hydrolix")
+                logger.error("A problem occurred during the post in Hydrolix")
 
     def _get_gams_run_options(self):
         cli_run_daily_model = " ".join(
@@ -97,16 +120,8 @@ class Runner:
                 self._get_gams_run_config(),
                 f'--GDX_DIR="{self._GDX_DIR}"',
                 f'--CURRENT_TIME="{dt.datetime.now().hour}"',
-                f'--IMPORT_GDX_PATH="{os.path.realpath(os.path.join(self._GDX_DIR, "import_coopt.gdx"))}"',
-                f'--OUT_DIR="{self._OUT_DIR}"',
-                f'--OUT_PATH="{os.path.join(self._OUT_DIR, "output.gdx")}"',
-                f'--ALL_OUT_PATH="{os.path.join(self._OUT_DIR, "all_output.gdx")}"',
+                f'--WORKING_DIR="{os.path.join(self._config["WORKING_DIR"])}"',
                 f'--GAMS_SRC_PATH="{self._GAMS_SRC_PATH}"',
-                f'--GAMS_POST_TREATMENT_PATH="{os.path.join(self._GAMS_SRC_PATH,"post_treatment.gms")}"',
-                f'--PZ_PATH="{os.path.join(self._GAMS_SRC_PATH, "power_zones.gdx")}"',
-                f'--BATHY_PATH="{os.path.join(self._GAMS_SRC_PATH, "bathymetry.gdx")}"',
-                f'--ADDUCTION_PATH={os.path.join(self._GAMS_SRC_PATH, "adduction_planes.gdx")}',
-                f'--XLS_OUTPUT="{os.path.join(self._config["WORKING_DIR"], "run_results.xlsx")}"',
             ]
         )
         return cli_run_daily_model
@@ -118,7 +133,7 @@ class Runner:
         os.system(cli_run_daily_model)
         logger.info(f"Run results stored at {self._config['WORKING_DIR']}")
 
-    def launch(self, start=None, post=False):
+    def launch(self, start=None):
         try:
             start = (start or dt.datetime.now()).replace(
                 hour=0, minute=0, second=0, microsecond=0
@@ -134,7 +149,14 @@ class Runner:
             self._import_from_hdx(start, end)
             self._convert_to_gdx()
             self._run_daily()
-            if post:
-                self._post_parameters()
+            self._post_parameters()
+            if self._config.get('WRITE_EXCEL_RESULTS', False):
+                self._write_visu_file()
+
+
+
         except Exception as ex:
             logger.exception(ex)
+
+
+
